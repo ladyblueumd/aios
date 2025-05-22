@@ -8,9 +8,9 @@ const contactMethods = [
   {
     icon: 'MdEmail',
     title: 'Email',
-    value: 'sadiqa.thornton@gmail.com',
+    value: 'ultramarinedreams@protonmail.com',
     description: 'Best for detailed project discussions',
-    action: 'mailto:sadiqa.thornton@gmail.com'
+    action: 'mailto:ultramarinedreams@protonmail.com'
   },
   {
     icon: 'MdPhone',

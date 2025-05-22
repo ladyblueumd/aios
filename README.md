@@ -182,7 +182,7 @@ This project demonstrates:
 **Sadie Thornton**  
 AI Automation Expert & Technical Consultant
 
-- **Email**: sadiqa.thornton@gmail.com
+- **Email**: ultramarinedreams@protonmail.com
 - **Phone**: (865) 265-1162
 - **Location**: Nashville, TN (Serving clients nationwide)
 

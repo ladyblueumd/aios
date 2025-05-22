@@ -351,7 +351,7 @@ export default function AboutPage() {
                   <Icon name="MdEmail" className="w-8 h-8 text-white" />
                 </div>
                 <div className="text-lg font-semibold mb-1">Email</div>
-                <div className="text-white/80">sadiqa.thornton@gmail.com</div>
+                <div className="text-white/80">ultramarinedreams@protonmail.com</div>
               </div>
               
               <div className="text-center">
