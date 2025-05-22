@@ -63,15 +63,15 @@ const Footer = () => {
             <div className="space-y-2 text-sm text-sky-600">
               <div className="flex items-center space-x-2">
                 <MdLocationOn className="w-4 h-4" />
-                <span>Nashville, TN (Nationwide Service)</span>
+                <span>Shelburne, VT 05482 (Nationwide Service)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MdPhone className="w-4 h-4" />
-                <span>(865) 265-1162</span>
+                <span>(802) 266-0866</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MdEmail className="w-4 h-4" />
-                <span>ultramarinedreams@protonmail.com</span>
+                <span>info@sadiethetechladyservices.net</span>
               </div>
             </div>
           </div>

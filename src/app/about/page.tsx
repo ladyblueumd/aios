@@ -342,7 +342,7 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name="MdLocationOn" className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-lg font-semibold mb-1">Based in Nashville, TN</div>
+                <div className="text-lg font-semibold mb-1">Based in Shelburne, VT</div>
                 <div className="text-white/80">AI automation services nationwide</div>
               </div>
               
@@ -351,7 +351,7 @@ export default function AboutPage() {
                   <Icon name="MdEmail" className="w-8 h-8 text-white" />
                 </div>
                 <div className="text-lg font-semibold mb-1">Email</div>
-                <div className="text-white/80">ultramarinedreams@protonmail.com</div>
+                <div className="text-white/80">info@sadiethetechladyservices.net</div>
               </div>
               
               <div className="text-center">
@@ -359,7 +359,7 @@ export default function AboutPage() {
                   <Icon name="MdPhone" className="w-8 h-8 text-white" />
                 </div>
                 <div className="text-lg font-semibold mb-1">Phone</div>
-                <div className="text-white/80">(865) 265-1162</div>
+                <div className="text-white/80">(802) 266-0866</div>
               </div>
             </div>
             

@@ -8,21 +8,21 @@ const contactMethods = [
   {
     icon: 'MdEmail',
     title: 'Email',
-    value: 'ultramarinedreams@protonmail.com',
+    value: 'info@sadiethetechladyservices.net',
     description: 'Best for detailed project discussions',
-    action: 'mailto:ultramarinedreams@protonmail.com'
+    action: 'mailto:info@sadiethetechladyservices.net'
   },
   {
     icon: 'MdPhone',
     title: 'Phone',
-    value: '(865) 265-1162',
+    value: '(802) 266-0866',
     description: 'For urgent support or quick questions',
-    action: 'tel:+18652651162'
+    action: 'tel:+18022660866'
   },
   {
     icon: 'MdLocationOn',
     title: 'Location',
-    value: 'Nashville, TN',
+    value: 'Shelburne, VT 05482',
     description: 'Serving clients nationwide',
     action: null
   },
@@ -452,10 +452,10 @@ export default function ContactPage() {
                     For urgent technical issues affecting your business operations.
                   </p>
                   <a 
-                    href="tel:+18652651162"
+                    href="tel:+18022660866"
                     className="btn-primary bg-red-600 hover:bg-red-700 text-white text-center block"
                   >
-                    Call Now: (865) 265-1162
+                    Call Now: (802) 266-0866
                   </a>
                 </div>
               </div>
