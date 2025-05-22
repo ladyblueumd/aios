@@ -302,15 +302,15 @@ export default function FullWorkLogPage() {
                                'text-orange-900';
               
               return (
-                <div 
+                <Link 
                   key={order.id} 
-                  className="metro-tile-revealed opacity-100 transition-all duration-500"
+                  href={`/experience/full-work-log/${order.id}`}
+                  className="metro-tile-revealed opacity-100 transition-all duration-500 block"
                   style={{ 
                     transitionDelay: `${index * 50}ms`
                   }}
                 >
-                  <Link href={`/experience/full-work-log/${order.id}`}>
-                    <div className={`metro-tile ${bgColor} backdrop-blur-sm rounded-xl p-6 border ${borderColor} h-64 flex flex-col justify-between hover:scale-105 transition-transform duration-300 cursor-pointer`}>
+                  <div className={`metro-tile ${bgColor} backdrop-blur-sm rounded-xl p-6 border ${borderColor} h-64 flex flex-col justify-between hover:scale-105 transition-transform duration-300 cursor-pointer`}>
                       
                       {/* Header */}
                       <div>
@@ -352,8 +352,7 @@ export default function FullWorkLogPage() {
                         </div>
                       </div>
                     </div>
-                  </Link>
-                </div>
+                </Link>
               );
             })}
           </div>

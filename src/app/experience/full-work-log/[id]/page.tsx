@@ -138,7 +138,7 @@ export default function WorkOrderDetailPage() {
       {/* Hero Section */}
       <section className="pb-16 bg-transparent">
         <div className="container-width">
-          <div ref={heroAnimation.elementRef} className={`${heroAnimation.animationClass} transition-all duration-700`}>
+          <div className="scroll-revealed opacity-100 transition-all duration-700">
             <div className="max-w-4xl mx-auto">
               
               {/* Breadcrumb */}
@@ -233,7 +233,7 @@ export default function WorkOrderDetailPage() {
       {/* Detailed Information */}
       <section className="pb-16 bg-transparent">
         <div className="container-width">
-          <div ref={detailsAnimation.elementRef} className={`${detailsAnimation.animationClass} transition-all duration-600`}>
+          <div className="scroll-revealed opacity-100 transition-all duration-600">
             <div className="max-w-4xl mx-auto px-4">
               
               <div className="grid md:grid-cols-2 gap-8">
@@ -304,6 +304,41 @@ export default function WorkOrderDetailPage() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Work Order Summary */}
+              <div className="mt-12">
+                <div className="bg-slate-500/20 backdrop-blur-sm rounded-xl p-8 border border-slate-500/30">
+                  <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center space-x-3">
+                    <MdWork className="w-6 h-6" />
+                    <span>Work Order Summary</span>
+                  </h2>
+                  
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-slate-900">{workOrder.typeOfWork}</div>
+                      <div className="text-slate-800 text-sm mt-1">Service Category</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-slate-900">{workOrder.state}</div>
+                      <div className="text-slate-800 text-sm mt-1">State Served</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-slate-900">
+                        {workOrder.rating > 0 ? workOrder.rating : workOrder.buyerRating > 0 ? workOrder.buyerRating : 'N/A'}
+                      </div>
+                      <div className="text-slate-800 text-sm mt-1">Performance Rating</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 p-4 bg-slate-600/10 rounded-lg border border-slate-600/20">
+                    <h3 className="font-semibold text-slate-900 mb-2">Professional Expertise Applied:</h3>
+                    <p className="text-slate-800 leading-relaxed">
+                      As part of my comprehensive technology consulting services, this {workOrder.typeOfWork.toLowerCase()} project for {workOrder.company} demonstrates my commitment to delivering high-quality, AI-enhanced solutions. 
+                      Each project is executed with precision, leveraging cutting-edge technology and best practices to ensure optimal results for clients nationwide.
+                    </p>
                   </div>
                 </div>
               </div>
