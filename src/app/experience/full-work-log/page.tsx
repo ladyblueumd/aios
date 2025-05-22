@@ -34,6 +34,8 @@ export default function FullWorkLogPage() {
   const [typeFilter, setTypeFilter] = useState('');
   const [stateFilter, setStateFilter] = useState('');
   const [loading, setLoading] = useState(true);
+  const [displayCount, setDisplayCount] = useState(24); // Show 24 items initially
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
   const statsAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
@@ -65,7 +67,27 @@ export default function FullWorkLogPage() {
     });
   }, [workOrders, search, typeFilter, stateFilter]);
 
-  const tilesAnimation = useStaggeredAnimation(Math.min(filteredOrders.length, 20), 50);
+  // Reset display count when filters change
+  useEffect(() => {
+    setDisplayCount(24);
+  }, [search, typeFilter, stateFilter]);
+
+  const displayedOrders = useMemo(() => {
+    return filteredOrders.slice(0, displayCount);
+  }, [filteredOrders, displayCount]);
+
+  const hasMoreItems = filteredOrders.length > displayCount;
+
+  const tilesAnimation = useStaggeredAnimation(Math.min(displayedOrders.length, 20), 50);
+
+  const handleLoadMore = () => {
+    setLoadingMore(true);
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+      setDisplayCount(prev => prev + 24);
+      setLoadingMore(false);
+    }, 500);
+  };
 
   const uniqueTypes = [...new Set(workOrders.map(order => order.typeOfWork))].sort();
   const uniqueStates = [...new Set(workOrders.map(order => order.state))].sort();
@@ -108,7 +130,7 @@ export default function FullWorkLogPage() {
       {/* Hero Section */}
       <section className="section-padding bg-transparent">
         <div className="container-width">
-          <div ref={heroAnimation.elementRef} className={`${heroAnimation.animationClass} transition-all duration-700`}>
+          <div className="scroll-revealed opacity-100 transition-all duration-700">
             <div className="text-center max-w-4xl mx-auto">
               
               {/* Breadcrumb */}
@@ -131,54 +153,12 @@ export default function FullWorkLogPage() {
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-sky-900">
-                  Complete AI/OS Portfolio
+                  Sadie the Tech Lady Services Past Projects
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-sky-800 mb-8 max-w-3xl mx-auto">
-                  Interactive showcase of {stats.total} AI-enhanced projects and automation deployments across multiple states and industries.
+                  Nationwide Professional Consultating Firm
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-12 bg-transparent">
-        <div className="container-width">
-          <div ref={statsAnimation.elementRef} className={`${statsAnimation.animationClass} transition-all duration-600`}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-sky-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-sky-900 mb-2">
-                  {stats.total}
-                </div>
-                <div className="text-sky-800 text-sm md:text-base">
-                  Total Projects
-                </div>
-              </div>
-              <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-emerald-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-emerald-900 mb-2">
-                  {stats.avgRating}★
-                </div>
-                <div className="text-emerald-800 text-sm md:text-base">
-                  Avg Rating
-                </div>
-              </div>
-              <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-orange-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-orange-900 mb-2">
-                  {stats.avgBuyerRating}★
-                </div>
-                <div className="text-orange-800 text-sm md:text-base">
-                  Client Rating
-                </div>
-              </div>
-              <div className="bg-blue-800/20 backdrop-blur-sm rounded-xl p-6 text-center border border-blue-800/30">
-                <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
-                  {stats.states}
-                </div>
-                <div className="text-blue-800 text-sm md:text-base">
-                  States Served
-                </div>
               </div>
             </div>
           </div>
@@ -249,7 +229,54 @@ export default function FullWorkLogPage() {
             </div>
             
             <div className="mt-4 text-emerald-800 text-sm">
-              Showing {filteredOrders.length} of {workOrders.length} projects
+              Showing {displayedOrders.length} of {filteredOrders.length} projects
+              {filteredOrders.length !== workOrders.length && (
+                <span className="ml-2 opacity-75">
+                  (filtered from {workOrders.length} total)
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-12 bg-transparent">
+        <div className="container-width">
+          <div className="scroll-revealed opacity-100 transition-all duration-600">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-sky-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-sky-900 mb-2">
+                  {stats.total}
+                </div>
+                <div className="text-sky-800 text-sm md:text-base">
+                  Total Projects
+                </div>
+              </div>
+              <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-emerald-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-emerald-900 mb-2">
+                  {stats.avgRating}★
+                </div>
+                <div className="text-emerald-800 text-sm md:text-base">
+                  Avg Rating
+                </div>
+              </div>
+              <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-orange-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-orange-900 mb-2">
+                  {stats.avgBuyerRating}★
+                </div>
+                <div className="text-orange-800 text-sm md:text-base">
+                  Client Rating
+                </div>
+              </div>
+              <div className="bg-blue-800/20 backdrop-blur-sm rounded-xl p-6 text-center border border-blue-800/30">
+                <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
+                  {stats.states}
+                </div>
+                <div className="text-blue-800 text-sm md:text-base">
+                  States Served
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -258,8 +285,8 @@ export default function FullWorkLogPage() {
       {/* Work Orders Grid */}
       <section className="pb-16 bg-transparent">
         <div className="container-width">
-          <div ref={tilesAnimation.elementRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredOrders.map((order, index) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {displayedOrders.map((order, index) => {
               const color = getWorkTypeColor(order.typeOfWork);
               const bgColor = color === 'deep-sky-blue' ? 'bg-sky-500/20' :
                              color === 'navy-blue' ? 'bg-blue-800/20' :
@@ -277,13 +304,9 @@ export default function FullWorkLogPage() {
               return (
                 <div 
                   key={order.id} 
-                  className={`transition-all duration-500 ${
-                    tilesAnimation.animatedItems[index] 
-                      ? 'metro-tile-revealed' 
-                      : 'metro-tile-hidden'
-                  }`}
+                  className="metro-tile-revealed opacity-100 transition-all duration-500"
                   style={{ 
-                    transitionDelay: tilesAnimation.isInView ? `${index * 50}ms` : '0ms' 
+                    transitionDelay: `${index * 50}ms`
                   }}
                 >
                   <Link href={`/experience/full-work-log/${order.id}`}>
@@ -342,6 +365,34 @@ export default function FullWorkLogPage() {
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No Projects Found</h3>
                 <p className="text-gray-700">Try adjusting your search criteria or filters.</p>
               </div>
+            </div>
+          )}
+
+          {/* Load More Button */}
+          {hasMoreItems && (
+            <div className="text-center mt-12">
+              <button
+                onClick={handleLoadMore}
+                disabled={loadingMore}
+                className="btn-primary bg-sky-600 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 text-lg flex items-center justify-center space-x-3 mx-auto min-w-[200px]"
+              >
+                {loadingMore ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Loading...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Load More Projects</span>
+                    <span className="bg-white/20 px-2 py-1 rounded text-sm">
+                      +{Math.min(24, filteredOrders.length - displayCount)}
+                    </span>
+                  </>
+                )}
+              </button>
+              <p className="text-sky-700 text-sm mt-3">
+                Showing {displayedOrders.length} of {filteredOrders.length} projects
+              </p>
             </div>
           )}
         </div>
