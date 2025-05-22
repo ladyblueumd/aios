@@ -39,28 +39,28 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-r from-sadie-secondary to-sadie-dark text-white">
+    <footer className="bg-transparent text-sky-500">
       <div className="container-width px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                <span className="text-sadie-primary font-bold text-lg">AI</span>
+              <div className="w-10 h-10 bg-sky-500/20 rounded-lg flex items-center justify-center">
+                <span className="text-sky-500 font-bold text-lg">AI</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold">AI/OS</h3>
-                <p className="text-white/80 text-sm">AI Automation Platform</p>
+                <h3 className="text-xl font-bold text-sky-500">AI/OS</h3>
+                <p className="text-sky-600 text-sm">AI Automation Platform</p>
               </div>
             </div>
-            <p className="text-white/70 mb-6 max-w-md">
+            <p className="text-sky-600 mb-6 max-w-md">
               AI-first automation management and intelligent technology solutions. 
               Serving clients nationwide with cutting-edge AI automation services.
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-2 text-sm text-white/70">
+            <div className="space-y-2 text-sm text-sky-600">
               <div className="flex items-center space-x-2">
                 <MdLocationOn className="w-4 h-4" />
                 <span>Nashville, TN (Nationwide Service)</span>
@@ -78,13 +78,13 @@ const Footer = () => {
 
           {/* Services Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <h4 className="text-lg font-semibold mb-4 text-sky-500">Services</h4>
             <ul className="space-y-2">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-sky-600 hover:text-sky-400 transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -95,13 +95,13 @@ const Footer = () => {
 
           {/* Experience Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Experience</h4>
+            <h4 className="text-lg font-semibold mb-4 text-sky-500">Experience</h4>
             <ul className="space-y-2">
               {footerLinks.experience.map((link) => (
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-sky-600 hover:text-sky-400 transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -112,13 +112,13 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Company</h4>
+            <h4 className="text-lg font-semibold mb-4 text-sky-500">Company</h4>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-sky-600 hover:text-sky-400 transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -129,21 +129,21 @@ const Footer = () => {
         </div>
 
         {/* Social Links & Copyright */}
-        <div className="border-t border-white/20 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
+        <div className="border-t border-sky-500/20 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           
           {/* Social Links */}
           <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-            <span className="text-white/70 text-sm">Follow Us:</span>
+            <span className="text-sky-600 text-sm">Follow Us:</span>
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
                 <Link
                   key={social.name}
                   href={social.href}
-                  className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                  className="p-2 rounded-full hover:bg-sky-500/10 transition-colors"
                   aria-label={social.name}
                 >
-                  <Icon className="w-5 h-5 text-white/70 hover:text-white" />
+                  <Icon className="w-5 h-5 text-sky-600 hover:text-sky-400" />
                 </Link>
               );
             })}
@@ -151,10 +151,10 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="text-center sm:text-right">
-            <p className="text-white/70 text-sm">
+            <p className="text-sky-600 text-sm">
               © {currentYear} ThorntonTech LLC. All rights reserved.
             </p>
-            <p className="text-white/60 text-xs mt-1">
+            <p className="text-sky-700 text-xs mt-1">
               Built with Next.js, React & Tailwind CSS
             </p>
           </div>
@@ -162,9 +162,9 @@ const Footer = () => {
 
         {/* Tech Badge */}
         <div className="mt-6 text-center">
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 rounded-full">
-            <div className="w-2 h-2 bg-emerald-green rounded-full animate-pulse"></div>
-            <span className="text-white/80 text-xs font-medium">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-sky-500/10 rounded-full">
+            <div className="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></div>
+            <span className="text-sky-600 text-xs font-medium">
               Powered by AI/OS Automation Platform
             </span>
           </div>

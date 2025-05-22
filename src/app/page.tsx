@@ -1,60 +1,74 @@
+'use client';
+
 import Image from 'next/image';
 import Tile from '@/components/Tile';
 import { serviceCategories, experienceSections } from '@/lib/data';
+import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useScrollAnimation';
 
 export default function HomePage() {
+  // Scroll animation hooks for each section
+  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const servicesAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const experienceAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const connectAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const ctaAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  
+  // Staggered animations for tiles
+  const servicesTilesAnimation = useStaggeredAnimation(serviceCategories.length, 150);
+  const experienceTilesAnimation = useStaggeredAnimation(experienceSections.length, 120);
+  const connectTilesAnimation = useStaggeredAnimation(3, 100);
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden relative z-10">
       
       {/* Hero Section - "Welcome to Sadie OS" */}
-      <section className="section-padding bg-gradient-to-br from-sadie-primary via-sadie-secondary to-sadie-accent-fresh">
-        <div className="container-width text-center text-white">
-          <div className="animate-slide-up">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-shadow-lg">
-              Welcome to{' '}
-              <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                AI/OS
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl mb-8 text-white/90 max-w-4xl mx-auto text-shadow">
-              AI automation management provided by Sadie the Tech Lady Services
-            </p>
-            <div className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Intelligent AI solutions, automated workflows, and cutting-edge technology management.
+      <section className="section-padding bg-transparent">
+        <div className="container-width text-center">
+          <div ref={heroAnimation.elementRef} className={`${heroAnimation.animationClass} transition-all duration-700`}>
+            <div className="p-8 md:p-12 max-w-5xl mx-auto">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-sky-500 text-shadow-lg">
+                Welcome to{' '}
+                <span className="bg-gradient-to-r from-sky-400 to-sky-600 bg-clip-text text-transparent">
+                  AI/OS
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl lg:text-3xl mb-8 text-sky-600 max-w-4xl mx-auto text-shadow">
+                AI automation management provided by Sadie the Tech Lady Services
+              </p>
+              <div className="text-lg md:text-xl text-sky-700 max-w-3xl mx-auto leading-relaxed">
+                Intelligent AI solutions, automated workflows, and cutting-edge technology management.
+              </div>
             </div>
-          </div>
-          
-          {/* Optional: Professional photo of Sadie */}
-          <div className="mt-12 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full bg-white/10 backdrop-blur-sm border-4 border-white/30 flex items-center justify-center">
-              {/* Placeholder for professional photo */}
-              <span className="text-4xl md:text-5xl font-bold text-white">ST</span>
-            </div>
-            <p className="mt-4 text-white/70 font-medium">
-              Sadie Thornton, CEO & Technical Expert
-            </p>
           </div>
         </div>
       </section>
 
       {/* Services Section - 4 Tiles Grid Layout */}
-      <section className="section-padding bg-white">
+      <section className="pt-8 pb-16 px-4 sm:px-6 lg:px-8 bg-transparent">
         <div className="container-width">
-          <div className="text-center mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              AI/OS Services
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              AI-first technology solutions designed to automate and optimize your business operations
-            </p>
+          <div ref={servicesAnimation.elementRef} className={`text-center mb-12 ${servicesAnimation.animationClass} transition-all duration-600`}>
+            <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-sky-500/30">
+              <h2 className="text-3xl md:text-4xl font-bold text-sky-600 mb-4">
+                AI/OS Services
+              </h2>
+              <p className="text-xl text-sky-700 max-w-3xl mx-auto">
+                AI-first technology solutions designed to automate and optimize your business operations
+              </p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div ref={servicesTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {serviceCategories.map((service, index) => (
               <div 
                 key={service.id} 
-                className="animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`transition-all duration-500 ${
+                  servicesTilesAnimation.animatedItems[index] 
+                    ? 'metro-tile-revealed' 
+                    : 'metro-tile-hidden'
+                }`}
+                style={{ 
+                  transitionDelay: servicesTilesAnimation.isInView ? `${index * 150}ms` : '0ms' 
+                }}
               >
                 <Tile
                   title={service.name}
@@ -72,18 +86,20 @@ export default function HomePage() {
       </section>
 
       {/* Experience Section - Mixed Grid Layout */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-transparent">
         <div className="container-width">
-          <div className="text-center mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              AI/OS Track Record
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Proven AI automation and technology deployment experience across industries
-            </p>
+          <div ref={experienceAnimation.elementRef} className={`text-center mb-12 ${experienceAnimation.animationClass} transition-all duration-600`}>
+            <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-emerald-500/30">
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-600 mb-4">
+                AI/OS Track Record
+              </h2>
+              <p className="text-xl text-emerald-700 max-w-3xl mx-auto">
+                Proven AI automation and technology deployment experience across industries
+              </p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={experienceTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {experienceSections.map((section, index) => {
               // Make the "Full Work History" tile larger
               const isFullHistory = section.id === 'full-history';
@@ -93,8 +109,14 @@ export default function HomePage() {
               return (
                 <div 
                   key={section.id} 
-                  className={`animate-slide-up ${gridClass}`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className={`transition-all duration-500 ${gridClass} ${
+                    experienceTilesAnimation.animatedItems[index] 
+                      ? 'metro-tile-revealed' 
+                      : 'metro-tile-hidden'
+                  }`}
+                  style={{ 
+                    transitionDelay: experienceTilesAnimation.isInView ? `${index * 120}ms` : '0ms' 
+                  }}
                 >
                   <Tile
                     title={section.title}
@@ -113,21 +135,32 @@ export default function HomePage() {
       </section>
 
       {/* Connect with Sadie Section - 3 Tiles Grid Layout */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-transparent">
         <div className="container-width">
-          <div className="text-center mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Connect with AI/OS
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Get to know the AI automation expert behind the technology solutions
-            </p>
+          <div ref={connectAnimation.elementRef} className={`text-center mb-12 ${connectAnimation.animationClass} transition-all duration-600`}>
+            <div className="bg-indigo-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-indigo-500/30">
+              <h2 className="text-3xl md:text-4xl font-bold text-indigo-600 mb-4">
+                Connect with AI/OS
+              </h2>
+              <p className="text-xl text-indigo-700 max-w-3xl mx-auto">
+                Get to know the AI automation expert behind the technology solutions
+              </p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div ref={connectTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             
             {/* About Sadie */}
-            <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <div 
+              className={`transition-all duration-500 ${
+                connectTilesAnimation.animatedItems[0] 
+                  ? 'metro-tile-revealed' 
+                  : 'metro-tile-hidden'
+              }`}
+              style={{ 
+                transitionDelay: connectTilesAnimation.isInView ? '100ms' : '0ms' 
+              }}
+            >
               <Tile
                 title="About Sadie"
                 subtitle="The Tech Professional"
@@ -140,7 +173,16 @@ export default function HomePage() {
             </div>
             
             {/* Get Support */}
-            <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <div 
+              className={`transition-all duration-500 ${
+                connectTilesAnimation.animatedItems[1] 
+                  ? 'metro-tile-revealed' 
+                  : 'metro-tile-hidden'
+              }`}
+              style={{ 
+                transitionDelay: connectTilesAnimation.isInView ? '200ms' : '0ms' 
+              }}
+            >
               <Tile
                 title="Get Support"
                 subtitle="Ready to Help"
@@ -153,7 +195,16 @@ export default function HomePage() {
             </div>
             
             {/* Tech Insights Blog */}
-            <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+            <div 
+              className={`transition-all duration-500 ${
+                connectTilesAnimation.animatedItems[2] 
+                  ? 'metro-tile-revealed' 
+                  : 'metro-tile-hidden'
+              }`}
+              style={{ 
+                transitionDelay: connectTilesAnimation.isInView ? '300ms' : '0ms' 
+              }}
+            >
               <Tile
                 title="Tech Insights Blog"
                 subtitle="Industry Knowledge"
@@ -171,7 +222,7 @@ export default function HomePage() {
       {/* Call to Action Section */}
       <section className="section-padding bg-gradient-to-r from-sadie-accent-fresh to-sadie-primary">
         <div className="container-width text-center text-white">
-          <div className="animate-slide-up">
+          <div ref={ctaAnimation.elementRef} className={`${ctaAnimation.animationClass} transition-all duration-700`}>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Automate Your Business with AI/OS?
             </h2>

@@ -30,28 +30,28 @@ export const truncateText = (text: string, maxLength: number): string => {
 export const getColorClasses = (color: string) => {
   const colorMap = {
     'deep-sky-blue': {
-      bg: 'bg-deep-sky-blue',
-      hover: 'hover:bg-blue-600',
-      text: 'text-white',
-      border: 'border-deep-sky-blue'
+      bg: 'bg-sky-500/20',
+      hover: 'hover:bg-sky-500/30',
+      text: 'text-sky-900',
+      border: 'border-sky-500/30'
     },
     'navy-blue': {
-      bg: 'bg-navy-blue',
-      hover: 'hover:bg-blue-800',
-      text: 'text-white',
-      border: 'border-navy-blue'
+      bg: 'bg-blue-800/20',
+      hover: 'hover:bg-blue-800/30',
+      text: 'text-blue-900',
+      border: 'border-blue-800/30'
     },
     'orange-peel': {
-      bg: 'bg-orange-peel',
-      hover: 'hover:bg-orange-600',
-      text: 'text-white',
-      border: 'border-orange-peel'
+      bg: 'bg-orange-500/20',
+      hover: 'hover:bg-orange-500/30',
+      text: 'text-orange-900',
+      border: 'border-orange-500/30'
     },
     'emerald-green': {
-      bg: 'bg-emerald-green',
-      hover: 'hover:bg-green-600',
-      text: 'text-white',
-      border: 'border-emerald-green'
+      bg: 'bg-emerald-500/20',
+      hover: 'hover:bg-emerald-500/30',
+      text: 'text-emerald-900',
+      border: 'border-emerald-500/30'
     }
   };
   
