@@ -1,0 +1,351 @@
+'use client';
+
+import { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
+import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useScrollAnimation';
+import { 
+  MdLocationOn, 
+  MdBusiness,
+  MdDateRange,
+  MdStar,
+  MdSearch,
+  MdFilterList,
+  MdClear,
+  MdWork,
+  MdTrendingUp
+} from 'react-icons/md';
+
+interface WorkOrder {
+  id: string;
+  serviceDate: string;
+  title: string;
+  typeOfWork: string;
+  city: string;
+  state: string;
+  country: string;
+  company: string;
+  rating: number;
+  buyerRating: number;
+}
+
+export default function FullWorkLogPage() {
+  const [workOrders, setWorkOrders] = useState<WorkOrder[]>([]);
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [stateFilter, setStateFilter] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const statsAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+
+  useEffect(() => {
+    fetch('/data/processed-work-orders.json')
+      .then(res => res.json())
+      .then(data => {
+        setWorkOrders(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error loading work orders:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const filteredOrders = useMemo(() => {
+    return workOrders.filter(order => {
+      const matchesSearch = search === '' || 
+        order.title.toLowerCase().includes(search.toLowerCase()) ||
+        order.company.toLowerCase().includes(search.toLowerCase()) ||
+        order.city.toLowerCase().includes(search.toLowerCase());
+      
+      const matchesType = typeFilter === '' || order.typeOfWork === typeFilter;
+      const matchesState = stateFilter === '' || order.state === stateFilter;
+      
+      return matchesSearch && matchesType && matchesState;
+    });
+  }, [workOrders, search, typeFilter, stateFilter]);
+
+  const tilesAnimation = useStaggeredAnimation(Math.min(filteredOrders.length, 20), 50);
+
+  const uniqueTypes = [...new Set(workOrders.map(order => order.typeOfWork))].sort();
+  const uniqueStates = [...new Set(workOrders.map(order => order.state))].sort();
+
+  const getWorkTypeColor = (type: string) => {
+    const colors = ['deep-sky-blue', 'navy-blue', 'emerald-green', 'orange-peel'];
+    const hash = type.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+    return colors[hash % colors.length];
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const stats = {
+    total: workOrders.length,
+    avgRating: workOrders.length > 0 ? (workOrders.reduce((acc, order) => acc + order.rating, 0) / workOrders.length).toFixed(1) : '0',
+    avgBuyerRating: workOrders.length > 0 ? (workOrders.reduce((acc, order) => acc + order.buyerRating, 0) / workOrders.length).toFixed(1) : '0',
+    states: uniqueStates.length
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sky-900 text-lg">Loading Work Orders...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-transparent">
+      
+      {/* Hero Section */}
+      <section className="section-padding bg-transparent">
+        <div className="container-width">
+          <div ref={heroAnimation.elementRef} className={`${heroAnimation.animationClass} transition-all duration-700`}>
+            <div className="text-center max-w-4xl mx-auto">
+              
+              {/* Breadcrumb */}
+              <nav className="mb-8">
+                <div className="flex items-center justify-center space-x-2 text-sky-600">
+                  <Link href="/" className="hover:text-sky-400 transition-colors">Home</Link>
+                  <span>/</span>
+                  <Link href="/experience" className="hover:text-sky-400 transition-colors">Experience</Link>
+                  <span>/</span>
+                  <span className="text-sky-800">Full Work History</span>
+                </div>
+              </nav>
+
+              {/* Hero Content */}
+              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-sky-500/30">
+                <div className="flex items-center justify-center mb-6">
+                  <div className="p-4 bg-sky-500/30 rounded-xl">
+                    <MdWork className="w-12 h-12 text-sky-900" />
+                  </div>
+                </div>
+                
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-sky-900">
+                  Complete AI/OS Portfolio
+                </h1>
+                
+                <p className="text-xl md:text-2xl text-sky-800 mb-8 max-w-3xl mx-auto">
+                  Interactive showcase of {stats.total} AI-enhanced projects and automation deployments across multiple states and industries.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-12 bg-transparent">
+        <div className="container-width">
+          <div ref={statsAnimation.elementRef} className={`${statsAnimation.animationClass} transition-all duration-600`}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-sky-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-sky-900 mb-2">
+                  {stats.total}
+                </div>
+                <div className="text-sky-800 text-sm md:text-base">
+                  Total Projects
+                </div>
+              </div>
+              <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-emerald-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-emerald-900 mb-2">
+                  {stats.avgRating}★
+                </div>
+                <div className="text-emerald-800 text-sm md:text-base">
+                  Avg Rating
+                </div>
+              </div>
+              <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-orange-500/30">
+                <div className="text-3xl md:text-4xl font-bold text-orange-900 mb-2">
+                  {stats.avgBuyerRating}★
+                </div>
+                <div className="text-orange-800 text-sm md:text-base">
+                  Client Rating
+                </div>
+              </div>
+              <div className="bg-blue-800/20 backdrop-blur-sm rounded-xl p-6 text-center border border-blue-800/30">
+                <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
+                  {stats.states}
+                </div>
+                <div className="text-blue-800 text-sm md:text-base">
+                  States Served
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Search and Filters */}
+      <section className="py-8 bg-transparent">
+        <div className="container-width">
+          <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 border border-emerald-500/30 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Search */}
+              <div className="relative">
+                <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-800 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/20 border border-emerald-500/30 rounded-lg text-emerald-900 placeholder-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                {search && (
+                  <button
+                    onClick={() => setSearch('')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-emerald-800 hover:text-emerald-600"
+                  >
+                    <MdClear className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              {/* Type Filter */}
+              <select
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+                className="px-4 py-3 bg-white/20 border border-emerald-500/30 rounded-lg text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">All Types</option>
+                {uniqueTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+
+              {/* State Filter */}
+              <select
+                value={stateFilter}
+                onChange={(e) => setStateFilter(e.target.value)}
+                className="px-4 py-3 bg-white/20 border border-emerald-500/30 rounded-lg text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">All States</option>
+                {uniqueStates.map(state => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </select>
+
+              {/* Clear Filters */}
+              <button
+                onClick={() => {
+                  setSearch('');
+                  setTypeFilter('');
+                  setStateFilter('');
+                }}
+                className="px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                <MdClear className="w-5 h-5" />
+                <span>Clear All</span>
+              </button>
+            </div>
+            
+            <div className="mt-4 text-emerald-800 text-sm">
+              Showing {filteredOrders.length} of {workOrders.length} projects
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Work Orders Grid */}
+      <section className="pb-16 bg-transparent">
+        <div className="container-width">
+          <div ref={tilesAnimation.elementRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredOrders.map((order, index) => {
+              const color = getWorkTypeColor(order.typeOfWork);
+              const bgColor = color === 'deep-sky-blue' ? 'bg-sky-500/20' :
+                             color === 'navy-blue' ? 'bg-blue-800/20' :
+                             color === 'emerald-green' ? 'bg-emerald-500/20' :
+                             'bg-orange-500/20';
+              const borderColor = color === 'deep-sky-blue' ? 'border-sky-500/30' :
+                                 color === 'navy-blue' ? 'border-blue-800/30' :
+                                 color === 'emerald-green' ? 'border-emerald-500/30' :
+                                 'border-orange-500/30';
+              const textColor = color === 'deep-sky-blue' ? 'text-sky-900' :
+                               color === 'navy-blue' ? 'text-blue-900' :
+                               color === 'emerald-green' ? 'text-emerald-900' :
+                               'text-orange-900';
+              
+              return (
+                <div 
+                  key={order.id} 
+                  className={`transition-all duration-500 ${
+                    tilesAnimation.animatedItems[index] 
+                      ? 'metro-tile-revealed' 
+                      : 'metro-tile-hidden'
+                  }`}
+                  style={{ 
+                    transitionDelay: tilesAnimation.isInView ? `${index * 50}ms` : '0ms' 
+                  }}
+                >
+                  <Link href={`/experience/full-work-log/${order.id}`}>
+                    <div className={`metro-tile ${bgColor} backdrop-blur-sm rounded-xl p-6 border ${borderColor} h-64 flex flex-col justify-between hover:scale-105 transition-transform duration-300 cursor-pointer`}>
+                      
+                      {/* Header */}
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className={`text-xs px-2 py-1 ${bgColor} rounded-full ${textColor} font-medium`}>
+                            {order.typeOfWork}
+                          </span>
+                          <div className="flex items-center space-x-1">
+                            <MdStar className={`w-4 h-4 ${textColor}`} />
+                            <span className={`text-sm ${textColor} font-medium`}>
+                              {order.rating}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <h3 className={`text-lg font-bold ${textColor} mb-2 line-clamp-2 leading-tight`}>
+                          {order.title}
+                        </h3>
+                        
+                        <p className={`${textColor} opacity-80 text-sm mb-3 font-medium`}>
+                          {order.company}
+                        </p>
+                      </div>
+
+                      {/* Footer */}
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <MdLocationOn className={`w-4 h-4 ${textColor} opacity-70`} />
+                          <span className={`text-sm ${textColor} opacity-80`}>
+                            {order.city}, {order.state}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <MdDateRange className={`w-4 h-4 ${textColor} opacity-70`} />
+                          <span className={`text-sm ${textColor} opacity-80`}>
+                            {formatDate(order.serviceDate)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+
+          {filteredOrders.length === 0 && (
+            <div className="text-center py-16">
+              <div className="bg-gray-500/20 backdrop-blur-sm rounded-xl p-8 max-w-md mx-auto border border-gray-500/30">
+                <MdSearch className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-800 mb-2">No Projects Found</h3>
+                <p className="text-gray-700">Try adjusting your search criteria or filters.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+} 
