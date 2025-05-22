@@ -89,6 +89,13 @@ const Header = () => {
             >
               <MdEmail className="w-5 h-5 text-white" />
             </Link>
+            <Link 
+              href="/" 
+              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              title="Return Home"
+            >
+              <MdHome className="w-5 h-5 text-white" />
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -149,6 +156,14 @@ const Header = () => {
                   >
                     <MdEmail className="w-6 h-6 text-white" />
                     <span className="text-xs text-white/80">Contact</span>
+                  </Link>
+                  <Link 
+                    href="/" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex flex-col items-center space-y-1 p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <MdHome className="w-6 h-6 text-white" />
+                    <span className="text-xs text-white/80">Home</span>
                   </Link>
                 </div>
               </div>
