@@ -162,7 +162,7 @@ export default function ContactPage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sadie-primary">
                       {method.title}
                     </h3>
-                    <div className="text-lg font-medium text-sadie-primary mb-2">
+                    <div className="text-lg font-medium text-sadie-primary mb-2 text-center break-words">
                       {method.value}
                     </div>
                     <p className="text-gray-600 text-sm">
@@ -177,7 +177,7 @@ export default function ContactPage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {method.title}
                     </h3>
-                    <div className="text-lg font-medium text-sadie-primary mb-2">
+                    <div className="text-lg font-medium text-sadie-primary mb-2 text-center break-words">
                       {method.value}
                     </div>
                     <p className="text-gray-600 text-sm">
