@@ -5,6 +5,7 @@
 - **Recommended Branch**: `subpages-development` (Latest with navigation features)
 - **Production Ready**: ✅ All 18 pages build successfully
 - **Alternative**: See `VERCEL_DUAL_BRANCH_SETUP.md` for main + development branch deployment
+- **Build Details**: See `BUILD_SETTINGS_GUIDE.md` for comprehensive build configuration
 
 ## 🎯 Branch Selection Guide
 
@@ -53,7 +54,9 @@
 3. Import from GitHub: `ladyblueumd/aios`
 4. **Select Branch**: `subpages-development`
 
-### 2. Configuration Settings
+### 2. Configuration Settings ⚙️
+
+#### **Framework & Build Settings**
 ```
 Framework Preset: Next.js
 Root Directory: ./
@@ -61,15 +64,27 @@ Build Command: npm run build
 Output Directory: .next
 Install Command: npm install
 Development Command: npm run dev
+Node.js Version: 20.x (Latest LTS)
 ```
+
+#### **Auto-Detected Settings**
+The following are automatically configured by our `next.config.js` and `vercel.json`:
+- ✅ **Output**: Standalone mode for optimal performance
+- ✅ **Image Optimization**: WebP/AVIF formats
+- ✅ **Bundle Splitting**: Vendor chunk optimization (173KB)
+- ✅ **Compression**: Gzip/Brotli enabled
+- ✅ **Security Headers**: X-Frame-Options, CSP, etc.
 
 ### 3. Environment Variables
 No environment variables required for current deployment.
 
-### 4. Build Settings
-- **Node.js Version**: 18.x or 20.x (recommended)
-- **Package Manager**: npm
-- **Build Output**: Static + Server-side rendering
+### 4. Advanced Settings (Optional)
+```
+Function Region: Auto (Global Edge Network)
+Runtime: Node.js 20.x
+Memory: 1024 MB (default)
+Timeout: 10s (default)
+```
 
 ## 📁 Project Structure
 ```
