@@ -32,7 +32,7 @@ export default function BlogPost1() {
             </h1>
             
             <p className="text-xl text-white/90 leading-relaxed">
-              Google's latest I/O was a firehose of AI innovation. Cutting through the noise to highlight key announcements relevant to IT professionals: Gemini advancements, Project Astra, and revolutionary development tools.
+              Google&apos;s latest I/O was a firehose of AI innovation. Cutting through the noise to highlight key announcements relevant to IT professionals: Gemini advancements, Project Astra, and revolutionary development tools.
             </p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function BlogPost1() {
             </div>
 
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              Google I/O 2025 delivered on its promise of being an AI-first event, with announcements that will fundamentally change how IT professionals approach development, system administration, and business automation. Here's what matters most for those working in the IT trenches.
+              Google I/O 2025 delivered on its promise of being an AI-first event, with announcements that will fundamentally change how IT professionals approach development, system administration, and business automation. Here&apos;s what matters most for those working in the IT trenches.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Evolution of Gemini: More Than Just Better Performance</h2>
@@ -87,7 +87,7 @@ export default function BlogPost1() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Project Astra: The Universal AI Assistant</h2>
 
             <p className="text-gray-700 mb-4">
-              Project Astra represents Google's vision of a universal AI assistant that can understand and interact with the world through multiple modalities—text, voice, images, and video simultaneously.
+              Project Astra represents Google&apos;s vision of a universal AI assistant that can understand and interact with the world through multiple modalities—text, voice, images, and video simultaneously.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Revolutionary IT Support Scenarios</h3>
@@ -116,7 +116,7 @@ export default function BlogPost1() {
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Gemini Code Assist: Enterprise-Ready</h3>
             <p className="text-gray-700 mb-4">
-              Now generally available, Code Assist integrates with existing development workflows and enterprise security policies. It understands your organization's coding standards and can ensure consistency across teams.
+              Now generally available, Code Assist integrates with existing development workflows and enterprise security policies. It understands your organization&apos;s coding standards and can ensure consistency across teams.
             </p>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 my-8">
@@ -125,7 +125,7 @@ export default function BlogPost1() {
                 These tools together enable IT teams to build custom solutions faster than ever before. Automation scripts, monitoring tools, and integration utilities that once took weeks can now be prototyped in hours.
               </p>
               <p className="text-green-800">
-                The barrier between "I need a tool that does X" and "I have a tool that does X" is disappearing.
+                The barrier between &ldquo;I need a tool that does X&rdquo; and &ldquo;I have a tool that does X&rdquo; is disappearing.
               </p>
             </div>
 
@@ -178,7 +178,7 @@ export default function BlogPost1() {
             </p>
 
             <p className="text-gray-700 mb-6">
-              The question isn't whether these AI capabilities will transform IT work—it's how quickly you'll adapt to leverage them for competitive advantage.
+              The question isn&apos;t whether these AI capabilities will transform IT work—it&apos;s how quickly you&apos;ll adapt to leverage them for competitive advantage.
             </p>
 
             <div className="border-t border-gray-200 pt-6 mt-8">

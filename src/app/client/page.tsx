@@ -56,6 +56,9 @@ export default function ClientLoginPage() {
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">AI/OS Client Portal</h1>
           <p className="text-white/80">Access your automation dashboard</p>
+          <p className="text-gray-600 text-sm">
+            You&apos;re in control of your technology destiny.
+          </p>
         </div>
 
         {/* Login Form */}

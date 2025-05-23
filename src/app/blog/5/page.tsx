@@ -32,7 +32,7 @@ export default function BlogPost5() {
             </h1>
             
             <p className="text-xl text-white/90 leading-relaxed">
-              After a whirlwind of announcements, it's time to connect the dots. Synthesizing the overarching trends from Google I/O, Microsoft Build, and Anthropic's Claude 4 release—from AI agents to on-device processing.
+              After a whirlwind of announcements, it&apos;s time to connect the dots. Synthesizing the overarching trends from Google I/O, Microsoft Build, and Anthropic&apos;s Claude 4 release—from AI agents to on-device processing.
             </p>
           </div>
         </div>
@@ -50,26 +50,26 @@ export default function BlogPost5() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 1: The Ascent of AI Agents</h2>
             
             <p className="text-gray-700 mb-4">
-              Perhaps the most significant trend is the move from static AI tools to autonomous AI agents. These aren't just chatbots—they're AI systems capable of taking actions, making decisions, and completing complex tasks with minimal human oversight.
+              Perhaps the most significant trend is the move from static AI tools to autonomous AI agents. These aren&apos;t just chatbots—they&apos;re AI systems capable of taking actions, making decisions, and completing complex tasks with minimal human oversight.
             </p>
 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-6 my-6">
               <h4 className="font-semibold text-gray-900 mb-2">Agent Examples Across Platforms:</h4>
               <ul className="text-gray-700 space-y-1">
                 <li>• <strong>Microsoft:</strong> Agent Store, NLWeb framework, Team Copilot</li>
-                <li>• <strong>Google:</strong> Project Astra's multimodal understanding</li>
-                <li>• <strong>Anthropic:</strong> Claude 4's enhanced agentic workflows</li>
+                <li>• <strong>Google:</strong> Project Astra&apos;s multimodal understanding</li>
+                <li>• <strong>Anthropic:</strong> Claude 4&apos;s enhanced agentic workflows</li>
               </ul>
             </div>
 
             <p className="text-gray-700 mb-4">
-              For IT professionals, this means preparing for a world where AI agents handle routine tasks, monitor systems, and even troubleshoot common issues. The question isn't whether agents will arrive—it's how quickly you can adapt your services to work alongside them.
+              For IT professionals, this means preparing for a world where AI agents handle routine tasks, monitor systems, and even troubleshoot common issues. The question isn&apos;t whether agents will arrive—it&apos;s how quickly you can adapt your services to work alongside them.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 2: On-Device AI Goes Mainstream</h2>
 
             <p className="text-gray-700 mb-4">
-              Both Google and Microsoft are betting heavily on edge AI—processing that happens directly on user devices rather than in the cloud. Google's Gemma 3n and Microsoft's Windows AI Foundry represent a fundamental shift toward distributed AI computing.
+              Both Google and Microsoft are betting heavily on edge AI—processing that happens directly on user devices rather than in the cloud. Google&apos;s Gemma 3n and Microsoft&apos;s Windows AI Foundry represent a fundamental shift toward distributed AI computing.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Why This Matters for IT</h3>
@@ -87,7 +87,7 @@ export default function BlogPost5() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 3: Multimodal is the New Standard</h2>
 
             <p className="text-gray-700 mb-4">
-              Every major AI platform now emphasizes multimodal capabilities—AI that can process text, images, audio, and video simultaneously. This isn't a nice-to-have feature; it's becoming the baseline expectation.
+              Every major AI platform now emphasizes multimodal capabilities—AI that can process text, images, audio, and video simultaneously. This isn&apos;t a nice-to-have feature; it&apos;s becoming the baseline expectation.
             </p>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 my-8">
@@ -103,7 +103,7 @@ export default function BlogPost5() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 4: AI-Assisted & Autonomous Development</h2>
 
             <p className="text-gray-700 mb-4">
-              The evolution of coding assistants like GitHub Copilot, Google's Jules, and various AI-powered development tools is fundamentally changing how software is created. We're moving from AI that suggests code to AI that can write, test, and deploy entire applications.
+              The evolution of coding assistants like GitHub Copilot, Google&apos;s Jules, and various AI-powered development tools is fundamentally changing how software is created. We&apos;re moving from AI that suggests code to AI that can write, test, and deploy entire applications.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Implications for IT Teams</h3>
@@ -114,7 +114,7 @@ export default function BlogPost5() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 5: The Data and Hardware Backbone</h2>
 
             <p className="text-gray-700 mb-4">
-              Behind every AI breakthrough is massive computational power and sophisticated data management. Microsoft's Azure GB200 supercomputer, NVIDIA's continued GPU innovation, and new data platforms are creating the infrastructure that makes these AI advances possible.
+              Behind every AI breakthrough is massive computational power and sophisticated data management. Microsoft&apos;s Azure GB200 supercomputer, NVIDIA&apos;s continued GPU innovation, and new data platforms are creating the infrastructure that makes these AI advances possible.
             </p>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 my-8">
@@ -130,7 +130,7 @@ export default function BlogPost5() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 6: The Model Context Protocol (MCP)</h2>
 
             <p className="text-gray-700 mb-4">
-              One of the most technically significant but underreported developments is the emergence of standards like Anthropic's Model Context Protocol. These frameworks enable safer, more interoperable AI systems that can work across different platforms and providers.
+              One of the most technically significant but underreported developments is the emergence of standards like Anthropic&apos;s Model Context Protocol. These frameworks enable safer, more interoperable AI systems that can work across different platforms and providers.
             </p>
 
             <p className="text-gray-700 mb-4">
