@@ -9,11 +9,51 @@
 - **Shared JS**: 175KB (optimized vendors chunk)
 - **Build Time**: ~30-60 seconds
 
+### **🚨 CRITICAL: Vercel Dependency Fix**
+**Issue**: Vercel build failed with "Cannot find module 'tailwindcss'"
+**Solution**: Moved CSS dependencies from `devDependencies` to `dependencies`
+
+```json
+"dependencies": {
+  "tailwindcss": "^3.4.3",
+  "autoprefixer": "^10.4.19", 
+  "postcss": "^8.4.38"
+}
+```
+
+**Why**: Vercel needs CSS processing at **build time**, not just development time.
+
 ---
 
 ## 📁 Configuration Files
 
-### 1. **`next.config.js`** - Next.js Configuration
+### 1. **`package.json`** - Dependencies Configuration
+```json
+{
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.2.1",
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@types/react": "^18.3.0", 
+    "@types/react-dom": "^18.3.0",
+    "@types/leaflet": "^1.9.12",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.0",
+    "typescript": "^5.4.0"
+  }
+}
+```
+
+### 2. **`next.config.js`** - Next.js Configuration
 ```javascript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -48,24 +88,12 @@ const nextConfig = {
     }
     return config;
   },
-  
-  // Production optimizations
-  poweredByHeader: false,
-  compress: true,
-  
-  // TypeScript configuration
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  
-  // ESLint configuration
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
-}
+};
+
+module.exports = nextConfig;
 ```
 
-### 2. **`vercel.json`** - Vercel Platform Configuration
+### 3. **`vercel.json`** - Vercel Platform Configuration
 ```json
 {
   "buildCommand": "npm run build",
@@ -83,7 +111,7 @@ const nextConfig = {
 }
 ```
 
-### 3. **`package.json`** - Build Scripts
+### 4. **`package.json`** - Build Scripts
 ```json
 {
   "scripts": {
