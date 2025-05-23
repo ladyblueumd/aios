@@ -185,7 +185,7 @@ export default function AIAutomationPage() {
                   description={service.description}
                   icon={service.icon}
                   bgColor={service.color}
-                  href="/contact"
+                  href={`/services/ai-automation/${service.id}`}
                   size="large"
                   features={service.features}
                 />

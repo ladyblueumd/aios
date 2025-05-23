@@ -51,7 +51,7 @@ export const serviceCategories: ServiceCategory[] = [
     callToAction: "Automate with AI"
   },
   {
-    id: "hardware-migration",
+    id: "hardware-deployment",
     name: "AI-Enhanced Hardware Deployment",
     description: "Smart hardware installations and migrations powered by AI optimization for maximum efficiency and minimal downtime.",
     icon: "MdStorage",
@@ -66,7 +66,7 @@ export const serviceCategories: ServiceCategory[] = [
     callToAction: "Deploy Intelligently"
   },
   {
-    id: "software-admin",
+    id: "software-development",
     name: "AI Software Development & Administration",
     description: "Next-generation software solutions powered by AI, with intelligent system administration and automated technical support.",
     icon: "MdCode",
