@@ -28,7 +28,8 @@ const nextConfig = {
   
   // Experimental features for better performance
   experimental: {
-    optimizeCss: true,
+    // Disabled due to critters dependency issue in development
+    // optimizeCss: true,
   },
 }
 

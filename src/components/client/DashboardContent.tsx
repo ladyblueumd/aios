@@ -115,10 +115,10 @@ export default function DashboardContent() {
             </div>
             <div className="text-right">
               <div className="text-white/60 text-sm">Current Time</div>
-              <div className="text-white text-xl font-mono">
+              <div className="text-white text-xl font-mono" suppressHydrationWarning={true}>
                 {currentTime.toLocaleTimeString()}
               </div>
-              <div className="text-white/80 text-sm">
+              <div className="text-white/80 text-sm" suppressHydrationWarning={true}>
                 {currentTime.toLocaleDateString()}
               </div>
             </div>
@@ -150,26 +150,26 @@ export default function DashboardContent() {
       </div>
 
       {/* Quick Actions Panel */}
-      <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 shadow-xl mb-8">
+      <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 mb-8 shadow-xl">
         <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <button className="bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/30 p-4 transition-all duration-200 text-white">
+          <button className="bg-sky-500/30 hover:bg-sky-500/50 border border-sky-400/30 p-4 transition-all duration-300 text-white">
             <MdPsychology className="w-6 h-6 mx-auto mb-2" />
             <div className="text-sm font-medium">Deploy Agent</div>
           </button>
           
-          <button className="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/30 p-4 transition-all duration-200 text-white">
+          <button className="bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/30 p-4 transition-all duration-300 text-white">
             <MdAutoAwesome className="w-6 h-6 mx-auto mb-2" />
             <div className="text-sm font-medium">New Automation</div>
           </button>
           
-          <button className="bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/30 p-4 transition-all duration-200 text-white">
+          <button className="bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/30 p-4 transition-all duration-300 text-white">
             <MdAnalytics className="w-6 h-6 mx-auto mb-2" />
             <div className="text-sm font-medium">View Reports</div>
           </button>
           
-          <button className="bg-orange-500/20 hover:bg-orange-500/30 border border-orange-400/30 p-4 transition-all duration-200 text-white">
+          <button className="bg-orange-500/30 hover:bg-orange-500/50 border border-orange-400/30 p-4 transition-all duration-300 text-white">
             <MdMonitorHeart className="w-6 h-6 mx-auto mb-2" />
             <div className="text-sm font-medium">System Check</div>
           </button>
@@ -186,11 +186,11 @@ export default function DashboardContent() {
             { time: '32 minutes ago', event: 'System performance optimization applied', status: 'info' },
             { time: '1 hour ago', event: 'User authentication rate limit warning', status: 'warning' }
           ].map((activity, index) => (
-            <div key={index} className="flex items-center space-x-3 p-3 bg-white/5 border border-white/10">
-              {getStatusIcon(activity.status)}
+            <div key={index} className="flex items-center space-x-3 p-3 bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div>{getStatusIcon(activity.status)}</div>
               <div className="flex-1">
                 <div className="text-white text-sm">{activity.event}</div>
-                <div className="text-white/60 text-xs">{activity.time}</div>
+                <div className="text-white/70 text-xs">{activity.time}</div>
               </div>
             </div>
           ))}

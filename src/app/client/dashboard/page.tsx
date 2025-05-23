@@ -6,6 +6,7 @@ import DashboardContent from '@/components/client/DashboardContent';
 
 export default function ClientDashboardPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [popoutActive, setPopoutActive] = useState(false);
 
   return (
     <div className="min-h-screen overflow-hidden relative">
@@ -32,12 +33,13 @@ export default function ClientDashboardPage() {
         <ClientSidebar 
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+          onPopoutChange={(active) => setPopoutActive(active)}
         />
       </div>
 
       {/* Main Content */}
       <div className={`transition-all duration-300 relative z-20 ${
-        sidebarCollapsed ? 'ml-16' : 'ml-16'
+        popoutActive ? 'ml-52' : 'ml-16'
       }`}>
         <DashboardContent />
       </div>

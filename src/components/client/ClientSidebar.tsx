@@ -22,6 +22,7 @@ import {
   MdChevronRight,
   MdSmartToy
 } from 'react-icons/md';
+import React from 'react';
 
 interface PopoutMenuItem {
   icon: React.ComponentType<any>;
@@ -39,11 +40,17 @@ interface SidebarItem {
 interface ClientSidebarProps {
   collapsed: boolean;
   onToggleCollapse: () => void;
+  onPopoutChange?: (active: boolean) => void;
 }
 
-export default function ClientSidebar({ collapsed, onToggleCollapse }: ClientSidebarProps) {
+export default function ClientSidebar({ collapsed, onToggleCollapse, onPopoutChange }: ClientSidebarProps) {
   const [activePopout, setActivePopout] = useState<string | null>(null);
   const [activeItem, setActiveItem] = useState('dashboard');
+
+  // Notify parent component when popout state changes
+  React.useEffect(() => {
+    onPopoutChange?.(activePopout !== null);
+  }, [activePopout, onPopoutChange]);
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -97,7 +104,9 @@ export default function ClientSidebar({ collapsed, onToggleCollapse }: ClientSid
       action: 'system',
       popout: [
         { icon: MdSettings, label: 'Configuration', action: 'system.config' },
-        { icon: MdSupport, label: 'Support', action: 'system.support' },
+        { icon: MdSupport, label: 'Helpdesk Tickets', action: 'system.helpdesk' },
+        { icon: MdNotifications, label: 'Feature Requests', action: 'system.features' },
+        { icon: MdSmartToy, label: 'Homepage', action: 'system.homepage' },
         { icon: MdLogout, label: 'Logout', action: 'system.logout' }
       ]
     }
@@ -117,12 +126,34 @@ export default function ClientSidebar({ collapsed, onToggleCollapse }: ClientSid
   const handlePopoutClick = (action: string) => {
     console.log('Popout action:', action);
     setActivePopout(null);
+    
+    // Handle navigation
+    switch (action) {
+      case 'system.homepage':
+        window.location.href = '/';
+        break;
+      case 'system.helpdesk':
+        // Create helpdesk page URL
+        window.location.href = '/client/helpdesk';
+        break;
+      case 'system.features':
+        // Create feature request page URL
+        window.location.href = '/client/feature-requests';
+        break;
+      case 'system.logout':
+        // Handle logout
+        window.location.href = '/client';
+        break;
+      default:
+        // Handle other actions
+        console.log('Action not implemented:', action);
+    }
   };
 
   return (
     <>
       {/* Main Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-16 bg-gradient-to-b from-slate-800 to-slate-900 shadow-2xl z-50 border-r border-white/10">
+      <div className="fixed left-0 top-0 h-full w-16 shadow-2xl z-50 border-r border-white/10">
         
         {/* Logo/Brand */}
         <div className="flex items-center justify-center py-4 border-b border-white/10">
@@ -175,7 +206,7 @@ export default function ClientSidebar({ collapsed, onToggleCollapse }: ClientSid
 
       {/* Popout Menu */}
       {activePopout && (
-        <div className="fixed left-16 top-0 h-full w-48 bg-slate-800/95 backdrop-blur-lg shadow-xl z-40 border-r border-white/10">
+        <div className="fixed left-16 top-32 h-auto max-h-96 w-36 bg-transparent shadow-xl z-40 border-r border-white/10">
           <div className="py-4">
             {sidebarItems
               .find(item => item.action === activePopout)
