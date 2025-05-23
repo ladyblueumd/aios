@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Build output configuration for Vercel
@@ -16,6 +18,12 @@ const nextConfig = {
   
   // Webpack configuration for build optimization
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Ensure proper alias resolution
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, './src'),
+    };
+    
     // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks = {

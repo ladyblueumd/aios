@@ -1,0 +1,17 @@
+# Vercel ignore file
+.git
+.gitignore
+.DS_Store
+node_modules
+.next
+screenshots and error checking
+work_order_images
+work_order_images_old
+umd_website_template
+*.py
+*.sh
+*.bat
+*.log
+*.md
+requirements*.txt
+extracted_work_orders.json
