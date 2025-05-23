@@ -23,6 +23,10 @@ interface WorkOrder {
   company: string;
   rating: number;
   buyerRating: number;
+  serviceDescription?: string;
+  closeoutNotes?: string;
+  textExtractionSource?: string;
+  textExtractionSuccess?: boolean;
 }
 
 export default function WorkOrderDetailPage() {
