@@ -191,6 +191,59 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Schedule a Consultation Section */}
+      <section className="section-padding bg-gradient-to-br from-sadie-primary/5 to-emerald-green/5">
+        <div className="container-width">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Schedule a Consultation
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Ready to discuss your project? Book a free consultation call to explore how AI automation can transform your business.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="card overflow-hidden">
+              <div className="p-6 bg-gradient-to-r from-sadie-primary to-emerald-green text-white text-center mb-0">
+                <div className="flex items-center justify-center space-x-3 mb-2">
+                  <Icon name="MdCalendarToday" className="w-6 h-6" />
+                  <h3 className="text-xl font-semibold">
+                    Book Your Free Consultation
+                  </h3>
+                </div>
+                <p className="text-white/90">
+                  Choose a time that works for you - all consultations are complimentary
+                </p>
+              </div>
+              
+              {/* Booking iframe */}
+              <div className="booking-container" style={{ height: '600px', position: 'relative' }}>
+                <iframe 
+                  src='https://outlook.office.com/owa/calendar/SADIETHETECHLADY1@sadiethetechladyservices.net/bookings/' 
+                  width='100%' 
+                  height='100%' 
+                  scrolling='yes' 
+                  style={{ 
+                    border: '0',
+                    background: 'white'
+                  }}
+                  title="Schedule a Consultation with Sadie the Tech Lady"
+                  loading="lazy"
+                />
+              </div>
+              
+              <div className="p-4 bg-gray-50 text-center">
+                <p className="text-sm text-gray-600">
+                  <Icon name="MdInfo" className="w-4 h-4 inline mr-1" />
+                  Can't find a suitable time? <a href="mailto:info@sadiethetechladyservices.net" className="text-sadie-primary hover:text-sadie-secondary">Email me</a> to arrange a custom appointment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section className="section-padding bg-gray-50">
         <div className="container-width">
