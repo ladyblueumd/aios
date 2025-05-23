@@ -6,11 +6,6 @@
   "outputDirectory": ".next",
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": {
-    "app/**/*": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",
