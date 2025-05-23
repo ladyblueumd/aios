@@ -13,8 +13,8 @@ import {
 } from 'react-icons/md';
 
 export default function ExperiencePage() {
-  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const tilesAnimation = useStaggeredAnimation(4, 100);
+  const heroAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const tilesAnimation = useStaggeredAnimation<HTMLDivElement>(4, 100);
 
   const experienceAreas = [
     {

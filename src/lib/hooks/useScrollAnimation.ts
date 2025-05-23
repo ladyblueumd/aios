@@ -8,12 +8,12 @@ interface UseScrollAnimationOptions {
   triggerOnce?: boolean;
 }
 
-export const useScrollAnimation = ({
+export const useScrollAnimation = <T extends HTMLElement = HTMLElement>({
   threshold = 0.1,
   rootMargin = '0px 0px -100px 0px',
   triggerOnce = true
 }: UseScrollAnimationOptions = {}) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<T>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
@@ -47,12 +47,12 @@ export const useScrollAnimation = ({
   return { elementRef, isInView };
 };
 
-export const useScrollAnimationClass = (
+export const useScrollAnimationClass = <T extends HTMLElement = HTMLElement>(
   hiddenClass: string = 'scroll-hidden',
   revealedClass: string = 'scroll-revealed',
   options?: UseScrollAnimationOptions
 ) => {
-  const { elementRef, isInView } = useScrollAnimation(options);
+  const { elementRef, isInView } = useScrollAnimation<T>(options);
   
   const animationClass = isInView ? revealedClass : hiddenClass;
   
@@ -60,12 +60,12 @@ export const useScrollAnimationClass = (
 };
 
 // Metro-style staggered animation hook
-export const useStaggeredAnimation = (
+export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>(
   itemCount: number,
   delay: number = 100,
   options?: UseScrollAnimationOptions
 ) => {
-  const { elementRef, isInView } = useScrollAnimation(options);
+  const { elementRef, isInView } = useScrollAnimation<T>(options);
   const [animatedItems, setAnimatedItems] = useState<boolean[]>(new Array(itemCount).fill(false));
 
   useEffect(() => {

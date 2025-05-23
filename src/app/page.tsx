@@ -7,16 +7,16 @@ import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useS
 
 export default function HomePage() {
   // Scroll animation hooks for each section
-  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const servicesAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const experienceAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const connectAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const ctaAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const heroAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const servicesAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const experienceAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const connectAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const ctaAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   
   // Staggered animations for tiles
-  const servicesTilesAnimation = useStaggeredAnimation(serviceCategories.length, 150);
-  const experienceTilesAnimation = useStaggeredAnimation(experienceSections.length, 120);
-  const connectTilesAnimation = useStaggeredAnimation(3, 100);
+  const servicesTilesAnimation = useStaggeredAnimation<HTMLDivElement>(serviceCategories.length, 150);
+  const experienceTilesAnimation = useStaggeredAnimation<HTMLDivElement>(experienceSections.length, 120);
+  const connectTilesAnimation = useStaggeredAnimation<HTMLDivElement>(3, 100);
 
   return (
     <div className="min-h-screen overflow-x-hidden relative z-10">

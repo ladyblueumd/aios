@@ -89,8 +89,8 @@ export default function FullWorkLogPage() {
     }, 500);
   };
 
-  const uniqueTypes = [...new Set(workOrders.map(order => order.typeOfWork))].sort();
-  const uniqueStates = [...new Set(workOrders.map(order => order.state))].sort();
+  const uniqueTypes = Array.from(new Set(workOrders.map(order => order.typeOfWork))).sort();
+  const uniqueStates = Array.from(new Set(workOrders.map(order => order.state))).sort();
 
   const getWorkTypeColor = (type: string) => {
     const colors = ['deep-sky-blue', 'navy-blue', 'emerald-green', 'orange-peel'];
