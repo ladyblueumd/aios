@@ -76,22 +76,29 @@ const Header = () => {
           {/* System Tray Icons (Desktop) */}
           <div className="hidden md:flex items-center space-x-3">
             <Link 
+              href="/client" 
+              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 text-sm font-medium transition-all duration-200 border border-white/30"
+              title="Client Portal"
+            >
+              Client Portal
+            </Link>
+            <Link 
               href="/about" 
-              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="p-2 hover:bg-white/10 transition-colors"
               title="About Sadie"
             >
               <MdInfo className="w-5 h-5 text-white" />
             </Link>
             <Link 
               href="/contact" 
-              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="p-2 hover:bg-white/10 transition-colors"
               title="Get Support"
             >
               <MdEmail className="w-5 h-5 text-white" />
             </Link>
             <Link 
               href="/" 
-              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="p-2 hover:bg-white/10 transition-colors"
               title="Return Home"
             >
               <MdHome className="w-5 h-5 text-white" />
@@ -140,6 +147,15 @@ const Header = () => {
               
               {/* Mobile System Tray */}
               <div className="pt-3 mt-3 border-t border-white/20">
+                <div className="mb-4">
+                  <Link 
+                    href="/client" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full bg-white/20 hover:bg-white/30 text-white px-4 py-3 text-center font-medium transition-all duration-200 border border-white/30 block"
+                  >
+                    Client Portal
+                  </Link>
+                </div>
                 <div className="flex items-center justify-center space-x-6">
                   <Link 
                     href="/about" 

@@ -63,12 +63,12 @@ export default function HomePage() {
       <section className="pt-8 pb-16 px-4 sm:px-6 lg:px-8 bg-transparent">
         <div className="container-width">
           <div ref={servicesAnimation.elementRef} className={`text-center mb-12 ${servicesAnimation.animationClass} transition-all duration-600`}>
-            <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-sky-500/30">
-              <h2 className="text-3xl md:text-4xl font-bold text-sky-600 mb-4">
-                AI/OS Services
+            <div className="bg-emerald-500/20 backdrop-blur-sm p-8 max-w-4xl mx-auto border border-emerald-500/30">
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-600 mb-4">
+                Comprehensive Service Portfolio
               </h2>
-              <p className="text-xl text-sky-700 max-w-3xl mx-auto">
-                AI-first technology solutions designed to automate and optimize your business operations
+              <p className="text-xl text-emerald-700 max-w-3xl mx-auto">
+                From hardware deployment to software development - complete technology solutions for your business
               </p>
             </div>
           </div>
@@ -102,10 +102,10 @@ export default function HomePage() {
       </section>
 
       {/* AI Automation Spotlight Section - Direct Links to Subpages */}
-      <section className="section-padding bg-gradient-to-br from-sky-50/50 to-emerald-50/50 backdrop-blur-sm">
+      <section className="section-padding bg-gradient-to-br from-emerald-50/50 to-sky-50/50 backdrop-blur-sm">
         <div className="container-width">
           <div className="text-center mb-12">
-            <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-sky-500/30">
+            <div className="bg-sky-500/20 backdrop-blur-sm p-8 max-w-4xl mx-auto border border-sky-500/30">
               <h2 className="text-3xl md:text-4xl font-bold text-sky-600 mb-4">
                 AI Automation Specialists
               </h2>
@@ -228,7 +228,7 @@ export default function HomePage() {
       <section className="section-padding bg-transparent">
         <div className="container-width">
           <div ref={connectAnimation.elementRef} className={`text-center mb-12 ${connectAnimation.animationClass} transition-all duration-600`}>
-            <div className="bg-indigo-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-indigo-500/30">
+            <div className="bg-indigo-500/20 backdrop-blur-sm p-8 max-w-4xl mx-auto border border-indigo-500/30">
               <h2 className="text-3xl md:text-4xl font-bold text-indigo-600 mb-4">
                 Connect with AI/OS
               </h2>

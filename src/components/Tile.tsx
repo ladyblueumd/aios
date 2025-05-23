@@ -199,7 +199,7 @@ const Tile = ({
         {/* Header Section */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+            <div className="p-2 bg-white/20 backdrop-blur-sm">
               <IconComponent className={`${iconSizes[size]} text-white`} />
             </div>
             
@@ -275,7 +275,7 @@ const Tile = ({
       
       {/* Click Indicator */}
       <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <div className="w-8 h-8 bg-white/20 flex items-center justify-center backdrop-blur-sm">
           <MdArrowForward className="w-4 h-4 text-white" />
         </div>
       </div>

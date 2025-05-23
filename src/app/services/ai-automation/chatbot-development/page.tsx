@@ -171,9 +171,9 @@ export default function ChatbotDevelopmentPage() {
               </div>
 
               {/* Hero Content */}
-              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-sky-500/30">
+              <div className="bg-sky-500/20 backdrop-blur-sm p-8 md:p-12 border border-sky-500/30">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="p-4 bg-sky-500/30 rounded-xl">
+                  <div className="p-4 bg-sky-500/30">
                     <MdPsychology className="w-12 h-12 text-sky-900" />
                   </div>
                 </div>
@@ -223,9 +223,9 @@ export default function ChatbotDevelopmentPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
-                <div key={feature.title} className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 border border-emerald-500/30">
+                <div key={feature.title} className="bg-emerald-500/20 backdrop-blur-sm p-6 border border-emerald-500/30">
                   <div className="flex items-center mb-4">
-                    <div className="p-3 bg-emerald-500/30 rounded-lg mr-4">
+                    <div className="p-3 bg-emerald-500/30 mr-4">
                       <MdPsychology className="w-6 h-6 text-emerald-900" />
                     </div>
                     <h3 className="text-lg font-bold text-emerald-900">{feature.title}</h3>
@@ -254,13 +254,13 @@ export default function ChatbotDevelopmentPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {process.map((step, index) => (
-                <div key={step.step} className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-6 border border-orange-500/30 text-center">
-                  <div className="w-12 h-12 bg-orange-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div key={step.step} className="bg-orange-500/20 backdrop-blur-sm p-6 border border-orange-500/30 text-center">
+                  <div className="w-12 h-12 bg-orange-500/30 flex items-center justify-center mx-auto mb-4">
                     <span className="text-xl font-bold text-orange-900">{step.step}</span>
                   </div>
                   <h3 className="text-lg font-bold text-orange-900 mb-2">{step.title}</h3>
                   <p className="text-orange-800 mb-3">{step.description}</p>
-                  <div className="text-sm font-semibold text-orange-900 bg-orange-500/20 rounded-lg px-3 py-1">
+                  <div className="text-sm font-semibold text-orange-900 bg-orange-500/20 px-3 py-1">
                     {step.duration}
                   </div>
                 </div>
@@ -288,11 +288,11 @@ export default function ChatbotDevelopmentPage() {
               {pricingTiers.map((tier, index) => (
                 <div 
                   key={tier.name} 
-                  className={`relative bg-${tier.color}/20 backdrop-blur-sm rounded-xl p-8 border border-${tier.color}/30 ${tier.recommended ? 'ring-2 ring-sky-500' : ''}`}
+                  className={`relative bg-${tier.color}/20 backdrop-blur-sm p-8 border border-${tier.color}/30 ${tier.recommended ? 'ring-2 ring-sky-500' : ''}`}
                 >
                   {tier.recommended && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-sky-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-sky-500 text-white px-4 py-1 text-sm font-semibold">
                         Recommended
                       </span>
                     </div>

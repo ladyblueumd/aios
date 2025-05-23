@@ -28,7 +28,7 @@ export default function ServicesPage() {
               </nav>
 
               {/* Hero Content */}
-              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-sky-500/30">
+              <div className="bg-sky-500/20 backdrop-blur-sm p-8 md:p-12 border border-sky-500/30">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-sky-900">
                   AI/OS Services
                 </h1>
@@ -71,7 +71,7 @@ export default function ServicesPage() {
           
           <div className="max-w-4xl mx-auto">
             <Link href="/services/ai-portfolio">
-              <div className="bg-gradient-to-r from-sky-500/20 to-emerald-500/20 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-sky-500/30 hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <div className="bg-gradient-to-r from-sky-500/20 to-emerald-500/20 backdrop-blur-sm p-8 md:p-12 border border-sky-500/30 hover:scale-105 transition-transform duration-300 cursor-pointer">
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div className="text-left">
                     <h3 className="text-2xl md:text-3xl font-bold text-sky-900 mb-4">
@@ -82,15 +82,15 @@ export default function ServicesPage() {
                       3 service tiers, and comprehensive support from data foundation to ongoing operations.
                     </p>
                     <div className="grid grid-cols-3 gap-4 text-center mb-6">
-                      <div className="bg-white/20 rounded-lg p-3">
+                      <div className="bg-white/20 p-3">
                         <div className="text-xl font-bold text-sky-900">5</div>
                         <div className="text-sm text-sky-700">Phases</div>
                       </div>
-                      <div className="bg-white/20 rounded-lg p-3">
+                      <div className="bg-white/20 p-3">
                         <div className="text-xl font-bold text-emerald-900">8+</div>
                         <div className="text-sm text-emerald-700">Services</div>
                       </div>
-                      <div className="bg-white/20 rounded-lg p-3">
+                      <div className="bg-white/20 p-3">
                         <div className="text-xl font-bold text-orange-900">3</div>
                         <div className="text-sm text-orange-700">Tiers</div>
                       </div>

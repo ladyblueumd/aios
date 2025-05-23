@@ -11,11 +11,6 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
   
-  // Build optimization
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
-  
   // Webpack configuration for build optimization
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Ensure proper alias resolution
@@ -24,19 +19,6 @@ const nextConfig = {
       '@': path.resolve(__dirname, './src'),
     };
     
-    // Optimize bundle size
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
-      };
-    }
     return config;
   },
   
@@ -44,14 +26,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
-  // TypeScript configuration
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  
-  // ESLint configuration
-  eslint: {
-    ignoreDuringBuilds: false,
+  // Experimental features for better performance
+  experimental: {
+    optimizeCss: true,
   },
 }
 
