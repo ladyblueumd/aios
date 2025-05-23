@@ -4,6 +4,9 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
+  "env": {
+    "NODE_ENV": "production"
+  },
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
