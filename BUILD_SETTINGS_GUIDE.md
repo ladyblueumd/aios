@@ -9,7 +9,9 @@
 - **Shared JS**: 175KB (optimized vendors chunk)
 - **Build Time**: ~30-60 seconds
 
-### **🚨 CRITICAL: Vercel Dependency Fix**
+### **🚨 CRITICAL FIXES FOR VERCEL DEPLOYMENT**
+
+#### **1. CSS Dependencies Fix**
 **Issue**: Vercel build failed with "Cannot find module 'tailwindcss'"
 **Solution**: Moved CSS dependencies from `devDependencies` to `dependencies`
 
@@ -21,7 +23,26 @@
 }
 ```
 
-**Why**: Vercel needs CSS processing at **build time**, not just development time.
+#### **2. Module Resolution Fix**
+**Issue**: Vercel build failed with "Cannot find module '@/components/Icon'" and "@/lib/hooks/useScrollAnimation"
+**Solution**: Added index files for better module resolution on Linux build environments
+
+**Files Added:**
+- `src/components/index.ts` - Exports all components
+- `src/lib/hooks/index.ts` - Exports all hooks
+
+**Import Changes:**
+```typescript
+// Before (failed on Vercel)
+import Icon from '@/components/Icon';
+import { useScrollAnimationClass } from '@/lib/hooks/useScrollAnimation';
+
+// After (works on Vercel)
+import { Icon } from '@/components';
+import { useScrollAnimationClass } from '@/lib/hooks';
+```
+
+**Why**: Linux build environments (Vercel) can be more strict about module resolution than macOS development environments.
 
 ---
 
