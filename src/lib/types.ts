@@ -19,7 +19,7 @@ export interface TileProps {
   title: string;
   subtitle?: string;
   icon: string;
-  bgColor: 'deep-sky-blue' | 'navy-blue' | 'orange-peel' | 'emerald-green';
+  bgColor: 'deep-sky-blue' | 'navy-blue' | 'orange-peel' | 'emerald-green' | 'purple';
   href: string;
   size?: 'small' | 'medium' | 'large';
   className?: string;
@@ -92,7 +92,7 @@ export interface NavItem {
 }
 
 // Color theme type
-export type ColorTheme = 'deep-sky-blue' | 'navy-blue' | 'orange-peel' | 'emerald-green';
+export type ColorTheme = 'deep-sky-blue' | 'navy-blue' | 'orange-peel' | 'emerald-green' | 'purple';
 
 // Page metadata type
 export interface PageMeta {

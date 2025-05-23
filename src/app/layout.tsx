@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import ClientLayout from '@/components/ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -54,11 +53,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} h-full bg-sadie-light text-sadie-text-light font-metro antialiased`}>
         <div className="min-h-full flex flex-col">
-          <Header />
-          <main className="flex-grow">
+          <ClientLayout>
             {children}
-          </main>
-          <Footer />
+          </ClientLayout>
         </div>
         
         {/* Background pattern for Metro UI feel */}

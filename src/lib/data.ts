@@ -1,6 +1,9 @@
 // Data processing functions for AI/OS platform
 import { WorkOrder, ServiceCategory, ExperienceSection, TechSkill } from './types';
 
+// IMPORTANT: This file should only export serializable data
+// Icons are exported as strings and converted to components in client components
+
 // Sample processed work order data structure
 export const sampleWorkOrders: WorkOrder[] = [
   {

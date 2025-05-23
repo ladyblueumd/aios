@@ -17,8 +17,18 @@ import {
   MdVerifiedUser,
   MdCloudSync
 } from 'react-icons/md';
+import { ColorTheme } from '@/lib/types';
 
-const hardwareServices = [
+interface HardwareService {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: ColorTheme;
+  features: string[];
+}
+
+const hardwareServices: HardwareService[] = [
   {
     id: 'server-deployment',
     title: 'AI-Optimized Server Deployment',
@@ -81,12 +91,12 @@ const deploymentStats = [
 ];
 
 export default function HardwareDeploymentPage() {
-  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const servicesAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const benefitsAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const ctaAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+  const heroAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const servicesAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const benefitsAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const ctaAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   
-  const servicesTilesAnimation = useStaggeredAnimation(hardwareServices.length, 150);
+  const servicesTilesAnimation = useStaggeredAnimation<HTMLDivElement>(hardwareServices.length, 150);
 
   return (
     <div className="min-h-screen bg-transparent">

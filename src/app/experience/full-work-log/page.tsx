@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useScrollAnimation';
 import { 
@@ -50,7 +50,7 @@ export default function FullWorkLogPage() {
 
   const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
 
-  const groupWorkOrdersByTitle = (orders: WorkOrder[]): GroupedWorkOrder[] => {
+  const groupWorkOrdersByTitle = useCallback((orders: WorkOrder[]): GroupedWorkOrder[] => {
     const grouped = orders.reduce((acc, order) => {
       const title = order.title;
       if (!acc[title]) {
@@ -102,7 +102,7 @@ export default function FullWorkLogPage() {
       // Fallback to date sorting
       return new Date(b.latestDate).getTime() - new Date(a.latestDate).getTime();
     });
-  };
+  }, []);
 
   useEffect(() => {
     fetch('/data/processed-work-orders.json')
@@ -116,7 +116,27 @@ export default function FullWorkLogPage() {
         console.error('Error loading work orders:', error);
         setLoading(false);
       });
-  }, []);
+  }, [groupWorkOrdersByTitle]);
+
+  const cleanCityName = (city: string, state: string) => {
+    // Remove any street addresses or numbers at the beginning
+    // Keep only the city name for privacy
+    const cleaned = city.replace(/^\d+\s+[^,]*,?\s*/, '').trim();
+    
+    // If the entire field was just an address (cleaned becomes empty), 
+    // return "Service Location" for privacy
+    if (!cleaned || cleaned.length < 2) {
+      return "Service Location";
+    }
+    
+    // If it looks like it still contains address parts (has numbers in the middle),
+    // try to extract just the city part or return generic location
+    if (/\d+/.test(cleaned) && !/(street|st|avenue|ave|road|rd|drive|dr|lane|ln|boulevard|blvd)$/i.test(cleaned)) {
+      return "Service Location";
+    }
+    
+    return cleaned;
+  };
 
   const filteredOrders = useMemo(() => {
     return groupedOrders.filter(group => {
@@ -162,26 +182,6 @@ export default function FullWorkLogPage() {
     const colors = ['deep-sky-blue', 'navy-blue', 'emerald-green', 'orange-peel'];
     const hash = type.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
     return colors[hash % colors.length];
-  };
-
-  const cleanCityName = (city: string, state: string) => {
-    // Remove any street addresses or numbers at the beginning
-    // Keep only the city name for privacy
-    const cleaned = city.replace(/^\d+\s+[^,]*,?\s*/, '').trim();
-    
-    // If the entire field was just an address (cleaned becomes empty), 
-    // return "Service Location" for privacy
-    if (!cleaned || cleaned.length < 2) {
-      return "Service Location";
-    }
-    
-    // If it looks like it still contains address parts (has numbers in the middle),
-    // try to extract just the city part or return generic location
-    if (/\d+/.test(cleaned) && !/(street|st|avenue|ave|road|rd|drive|dr|lane|ln|boulevard|blvd)$/i.test(cleaned)) {
-      return "Service Location";
-    }
-    
-    return cleaned;
   };
 
   if (loading) {

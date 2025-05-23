@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/OS Solutions - Enterprise AI Infrastructure & Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff6b6b;
+            --dark: #0a0e1a;
+            --darker: #060914;
+            --light: #f8f9fa;
+            --text-light: #b8c5d6;
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 2rem;
+            background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0a0e1a 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0,212,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            animation: drift 20s linear infinite;
+        }
+        
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)); }
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        /* Service Phases Section */
+        .services {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .phase-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+        
+        .phase-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .phase-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .phase-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .phase-card ul {
+            list-style: none;
+            color: var(--text-light);
+        }
+        
+        .phase-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .phase-card li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        /* Client Packages */
+        .packages {
+            padding: 5rem 2rem;
+            background: rgba(0, 212, 255, 0.02);
+        }
+        
+        .package-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .package-card {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .package-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+        
+        .package-card:hover::after {
+            opacity: 1;
+        }
+        
+        .package-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .package-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .package-features {
+            list-style: none;
+            color: var(--text-light);
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        
+        .package-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .package-features li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+        }
+        
+        /* Service Tiers */
+        .tiers {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tier-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tier-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .tier-card.featured::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-1);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .tier-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+        
+        .tier-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .tier-target {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tier-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .tier-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .tier-features li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .phase-grid,
+            .package-grid,
+            .tier-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tier-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AI/OS Solutions</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#tiers">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Enterprise AI Infrastructure & Services</h1>
+            <p>Transform your organization with custom AI solutions, from data vectorization to complete agent orchestration</p>
+            <div class="cta-buttons">
+                <a href="#services" class="btn btn-primary">Explore Services</a>
+                <a href="#contact" class="btn btn-secondary">Schedule Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Phases -->
+    <section id="services" class="services">
+        <div class="section-header">
+            <h2>Our 5-Phase AI Implementation Journey</h2>
+            <p>Comprehensive AI transformation delivered in strategic phases</p>
+        </div>
+        
+        <div class="phase-grid">
+            <div class="phase-card">
+                <span class="phase-number">1</span>
+                <h3>Data Foundation Services</h3>
+                <ul>
+                    <li>File Organization & Data Preparation</li>
+                    <li>Vector Database Implementation</li>
+                    <li>Knowledge Graph Creation</li>
+                    <li>Automated Data Pipeline Development</li>
+                </ul>
+            </div>
+            
+            <div class="phase-card">
+                <span class="phase-number">2</span>
+                <h3>AI Model Customization</h3>
+                <ul>
+                    <li>Custom Model Fine-Tuning</li>
+                    <li>Data Split & Training Preparation</li>
+                    <li>Performance Optimization</li>
+                    <li>Continuous Learning Pipeline</li>
+                </ul>
+            </div>
+            
+            <div class="phase-card">
+                <span class="phase-number">3</span>
+                <h3>Agent Ecosystem Design</h3>
+                <ul>
+                    <li>Multi-Agent System Architecture</li>
+                    <li>Workflow Automation Design</li>
+                    <li>Service Integration Planning</li>
+                    <li>Custom Tool Development</li>
+                </ul>
+            </div>
+            
+            <div class="phase-card">
+                <span class="phase-number">4</span>
+                <h3>Infrastructure & Deployment</h3>
+                <ul>
+                    <li>Local vs Cloud Strategy</li>
+                    <li>GPU Resource Planning</li>
+                    <li>Scalability Architecture</li>
+                    <li>Performance Monitoring</li>
+                </ul>
+            </div>
+            
+            <div class="phase-card">
+                <span class="phase-number">5</span>
+                <h3>Operations & Maintenance</h3>
+                <ul>
+                    <li>On-Site Technical Support</li>
+                    <li>Security & Compliance</li>
+                    <li>System Administration</li>
+                    <li>Continuous Optimization</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Packages -->
+    <section id="packages" class="packages">
+        <div class="section-header">
+            <h2>Tailored Solutions for Every Client</h2>
+            <p>Specialized packages designed for your ecosystem</p>
+        </div>
+        
+        <div class="package-grid">
+            <div class="package-card">
+                <div class="package-icon">🏢</div>
+                <h3>Microsoft Business Package</h3>
+                <p>Seamless integration with the Microsoft ecosystem</p>
+                <ul class="package-features">
+                    <li>Azure OpenAI Service Configuration</li>
+                    <li>Power Platform AI Automation</li>
+                    <li>Microsoft 365 Copilot Customization</li>
+                    <li>Azure Active Directory Integration</li>
+                </ul>
+            </div>
+            
+            <div class="package-card">
+                <div class="package-icon">☁️</div>
+                <h3>Google Business Package</h3>
+                <p>Leverage the power of Google Cloud AI</p>
+                <ul class="package-features">
+                    <li>Vertex AI Platform Setup</li>
+                    <li>Google Workspace AI Integration</li>
+                    <li>BigQuery ML Implementation</li>
+                    <li>Google Cloud Identity Management</li>
+                </ul>
+            </div>
+            
+            <div class="package-card">
+                <div class="package-icon">👨‍👩‍👧‍👦</div>
+                <h3>Personal/Family Package</h3>
+                <p>Private AI solutions for personal use</p>
+                <ul class="package-features">
+                    <li>Home Automation with AI</li>
+                    <li>Personal Knowledge Management</li>
+                    <li>Family Data Organization</li>
+                    <li>Privacy-Focused Local Deployment</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Tiers -->
+    <section id="tiers" class="tiers">
+        <div class="section-header">
+            <h2>Service Tier Structure</h2>
+            <p>Choose the perfect tier for your organization's needs</p>
+        </div>
+        
+        <div class="tier-grid">
+            <div class="tier-card">
+                <h3 class="tier-name">Starter Tier</h3>
+                <p class="tier-target">Small Business / Personal</p>
+                <ul class="tier-features">
+                    <li>Basic Data Vectorization</li>
+                    <li>Simple Agent Configuration</li>
+                    <li>Cloud-Based Deployment</li>
+                    <li>Remote Support</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary">Get Started</a>
+            </div>
+            
+            <div class="tier-card featured">
+                <h3 class="tier-name">Professional Tier</h3>
+                <p class="tier-target">Medium Business</p>
+                <ul class="tier-features">
+                    <li>Custom Model Fine-Tuning</li>
+                    <li>Multi-Agent Orchestration</li>
+                    <li>Hybrid Cloud/Local Deployment</li>
+                    <li>On-Site Consultation</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Get Started</a>
+            </div>
+            
+            <div class="tier-card">
+                <h3 class="tier-name">Enterprise Tier</h3>
+                <p class="tier-target">Large Business</p>
+                <ul class="tier-features">
+                    <li>Full Local Foundry Setup</li>
+                    <li>Custom Security Frameworks</li>
+                    <li>Dedicated On-Site Technicians</li>
+                    <li>Complete Governance Implementation</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Ready to Transform Your Business with AI?</h3>
+                <p>Contact us for a personalized consultation</p>
+                <a href="mailto:info@aios-solutions.com" class="btn btn-primary">info@aios-solutions.com</a>
+            </div>
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">💼</a>
+                <a href="#">🐦</a>
+                <a href="#">📘</a>
+            </div>
+            <p style="margin-top: 2rem; color: var(--text-light);">© 2024 AI/OS Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Add fade-in animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.phase-card, .package-card, .tier-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

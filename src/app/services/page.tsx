@@ -6,8 +6,8 @@ import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useS
 import { serviceCategories } from '@/lib/data';
 
 export default function ServicesPage() {
-  const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const servicesAnimation = useStaggeredAnimation(serviceCategories.length, 150);
+  const heroAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
+  const servicesAnimation = useStaggeredAnimation<HTMLDivElement>(serviceCategories.length, 150);
 
   return (
     <div className="min-h-screen bg-transparent">
@@ -53,6 +53,69 @@ export default function ServicesPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured AI Portfolio */}
+      <section className="section-padding bg-gradient-to-r from-emerald-500/10 to-sky-500/10">
+        <div className="container-width">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-4">
+              🎯 Complete AI/OS Service Portfolio
+            </h2>
+            <p className="text-xl text-emerald-700 max-w-3xl mx-auto">
+              Comprehensive AI transformation services from data foundation to enterprise-grade operations
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <Link href="/services/ai-portfolio">
+              <div className="bg-gradient-to-r from-sky-500/20 to-emerald-500/20 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-sky-500/30 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="text-left">
+                    <h3 className="text-2xl md:text-3xl font-bold text-sky-900 mb-4">
+                      Enterprise AI Transformation
+                    </h3>
+                    <p className="text-sky-800 mb-6">
+                      Complete 5-phase AI implementation journey with 8+ specialized services, 
+                      3 service tiers, and comprehensive support from data foundation to ongoing operations.
+                    </p>
+                    <div className="grid grid-cols-3 gap-4 text-center mb-6">
+                      <div className="bg-white/20 rounded-lg p-3">
+                        <div className="text-xl font-bold text-sky-900">5</div>
+                        <div className="text-sm text-sky-700">Phases</div>
+                      </div>
+                      <div className="bg-white/20 rounded-lg p-3">
+                        <div className="text-xl font-bold text-emerald-900">8+</div>
+                        <div className="text-sm text-emerald-700">Services</div>
+                      </div>
+                      <div className="bg-white/20 rounded-lg p-3">
+                        <div className="text-xl font-bold text-orange-900">3</div>
+                        <div className="text-sm text-orange-700">Tiers</div>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center space-x-2 text-sky-900 font-semibold">
+                      <span>Explore Full Portfolio</span>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">🤖</div>
+                    <div className="text-lg font-bold text-sky-900 mb-2">AI-First Solutions</div>
+                    <ul className="text-sky-800 text-sm space-y-1">
+                      <li>• Data Vectorization & Knowledge Graphs</li>
+                      <li>• Custom Model Fine-Tuning</li>
+                      <li>• Multi-Agent Orchestration</li>
+                      <li>• Local AI Foundry Setup</li>
+                      <li>• Enterprise Security & Governance</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

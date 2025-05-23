@@ -100,7 +100,7 @@ export default function WorkOrderDetailPage() {
         <div className="text-center max-w-md mx-auto">
           <div className="bg-red-500/20 backdrop-blur-sm rounded-xl p-8 border border-red-500/30">
             <h1 className="text-2xl font-bold text-red-900 mb-4">Work Order Not Found</h1>
-            <p className="text-red-800 mb-6">The work order you're looking for doesn't exist or has been removed.</p>
+            <p className="text-red-800 mb-6">The work order you&apos;re looking for doesn&apos;t exist or has been removed.</p>
             <Link 
               href="/experience/full-work-log"
               className="btn-primary bg-red-600 hover:bg-red-700 text-white"

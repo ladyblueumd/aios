@@ -52,6 +52,12 @@ export const getColorClasses = (color: string) => {
       hover: 'hover:bg-emerald-500/30',
       text: 'text-emerald-900',
       border: 'border-emerald-500/30'
+    },
+    'purple': {
+      bg: 'bg-purple-500/20',
+      hover: 'hover:bg-purple-500/30',
+      text: 'text-purple-900',
+      border: 'border-purple-500/30'
     }
   };
   
