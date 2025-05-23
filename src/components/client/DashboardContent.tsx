@@ -39,7 +39,7 @@ export default function DashboardContent() {
       value: 3,
       subtitle: '2 running, 1 standby',
       icon: MdPsychology,
-      bgColor: 'bg-emerald-500/80',
+      bgColor: 'bg-emerald-500/20',
       status: 'success'
     },
     {
@@ -48,7 +48,7 @@ export default function DashboardContent() {
       value: 12,
       subtitle: '8 active, 4 scheduled',
       icon: MdAutoAwesome,
-      bgColor: 'bg-sky-500/80',
+      bgColor: 'bg-sky-500/20',
       status: 'info'
     },
     {
@@ -57,7 +57,7 @@ export default function DashboardContent() {
       value: '98%',
       subtitle: 'All systems operational',
       icon: MdMonitorHeart,
-      bgColor: 'bg-green-500/80',
+      bgColor: 'bg-green-500/20',
       status: 'success'
     },
     {
@@ -66,7 +66,7 @@ export default function DashboardContent() {
       value: '2.4s',
       subtitle: 'Avg response time',
       icon: MdSpeed,
-      bgColor: 'bg-orange-500/80',
+      bgColor: 'bg-orange-500/20',
       status: 'warning'
     },
     {
@@ -75,7 +75,7 @@ export default function DashboardContent() {
       value: '1.2K',
       subtitle: 'Tasks completed today',
       icon: MdAnalytics,
-      bgColor: 'bg-purple-500/80',
+      bgColor: 'bg-purple-500/20',
       status: 'info'
     },
     {
@@ -84,7 +84,7 @@ export default function DashboardContent() {
       value: 24,
       subtitle: '18 active, 6 idle',
       icon: MdGroup,
-      bgColor: 'bg-teal-500/80',
+      bgColor: 'bg-teal-500/20',
       status: 'success'
     }
   ];

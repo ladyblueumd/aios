@@ -25,15 +25,27 @@ export default function ClientLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-600 to-emerald-600 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent"></div>
-      </div>
+      {/* Background Video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        controls={false}
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ filter: 'brightness(0.3) contrast(1.2)' }}
+      >
+        <source src="/videos/7020018_Particle_Dot_3840x2160.mp4" type="video/mp4" />
+        <source src="/videos/6994947_Cyber_Ai_3840x2160.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-      {/* Login Container */}
-      <div className="relative z-10 bg-white/10 backdrop-blur-lg border border-white/20 p-8 w-full max-w-md shadow-2xl">
+      {/* Login Container - Only visible element */}
+      <div className="relative z-20 bg-white/10 backdrop-blur-lg border border-white/20 p-8 w-full max-w-md shadow-2xl">
         
         {/* Header */}
         <div className="text-center mb-8">
@@ -114,9 +126,9 @@ export default function ClientLoginPage() {
               </label>
             </div>
             <div className="text-sm">
-              <a href="#" className="text-white/80 hover:text-white transition-colors">
+              <button type="button" className="text-white/80 hover:text-white transition-colors">
                 Forgot password?
-              </a>
+              </button>
             </div>
           </div>
 
