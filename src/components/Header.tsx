@@ -12,7 +12,8 @@ import {
   MdHome,
   MdBusiness,
   MdWork,
-  MdArticle 
+  MdArticle,
+  MdSupport
 } from 'react-icons/md';
 
 const Header = () => {
@@ -90,6 +91,13 @@ const Header = () => {
               <MdInfo className="w-5 h-5 text-white" />
             </Link>
             <Link 
+              href="/client/helpdesk" 
+              className="p-2 hover:bg-white/10 transition-colors"
+              title="Get Help"
+            >
+              <MdSupport className="w-5 h-5 text-white" />
+            </Link>
+            <Link 
               href="/contact" 
               className="p-2 hover:bg-white/10 transition-colors"
               title="Get Support"
@@ -164,6 +172,14 @@ const Header = () => {
                   >
                     <MdInfo className="w-6 h-6 text-white" />
                     <span className="text-xs text-white/80">About</span>
+                  </Link>
+                  <Link 
+                    href="/client/helpdesk" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex flex-col items-center space-y-1 p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <MdSupport className="w-6 h-6 text-white" />
+                    <span className="text-xs text-white/80">Help</span>
                   </Link>
                   <Link 
                     href="/contact" 

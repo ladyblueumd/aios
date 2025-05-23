@@ -7,7 +7,8 @@ import {
   MdLocationOn,
   MdWeb,
   MdCode,
-  MdBusiness 
+  MdBusiness,
+  MdSupport
 } from 'react-icons/md';
 
 const Footer = () => {
@@ -29,6 +30,7 @@ const Footer = () => {
     company: [
       { name: 'About Sadie', href: '/about' },
       { name: 'Tech Insights Blog', href: '/blog' },
+      { name: 'Helpdesk Support', href: '/client/helpdesk' },
       { name: 'Contact Us', href: '/contact' },
       { name: 'Privacy Policy', href: '/privacy' },
     ],
@@ -37,6 +39,7 @@ const Footer = () => {
   const socialLinks = [
     { name: 'Website', href: '#', icon: MdWeb },
     { name: 'GitHub', href: '#', icon: MdCode },
+    { name: 'Helpdesk', href: '/client/helpdesk', icon: MdSupport },
     { name: 'Business', href: '#', icon: MdBusiness },
   ];
 
@@ -154,7 +157,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-center sm:text-right">
             <p className="text-sky-600 text-sm">
-              © {currentYear} ThorntonTech LLC. All rights reserved.
+              © {currentYear} Ultramarine Dreams DBA as Sadie the Tech Lady. All rights reserved.
             </p>
             <p className="text-sky-700 text-xs mt-1">
               Built with Next.js, React & Tailwind CSS
