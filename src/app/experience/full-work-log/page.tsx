@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useScrollAnimation';
+import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks';
 import { 
   MdLocationOn, 
   MdBusiness,

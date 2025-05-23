@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useScrollAnimationClass } from '@/lib/hooks/useScrollAnimation';
+import { useScrollAnimationClass } from '@/lib/hooks';
 import { 
   MdLocationOn, 
   MdBusiness,
