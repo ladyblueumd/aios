@@ -7,7 +7,6 @@ import { useScrollAnimationClass } from '@/lib/hooks/useScrollAnimation';
 import { 
   MdLocationOn, 
   MdBusiness,
-  MdDateRange,
   MdArrowBack,
   MdWork,
   MdAssessment,
@@ -58,15 +57,6 @@ export default function WorkOrderDetailPage() {
     const colors = ['deep-sky-blue', 'navy-blue', 'emerald-green', 'orange-peel'];
     const hash = type.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
     return colors[hash % colors.length];
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
   };
 
   const cleanCityName = (city: string, state: string) => {
@@ -188,7 +178,7 @@ export default function WorkOrderDetailPage() {
                 <div className="grid md:grid-cols-1 gap-8">
                   <div>
                     <h2 className={`text-xl font-semibold ${textColor} mb-4`}>Project Information</h2>
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className="grid md:grid-cols-2 gap-6">
                       <div className="flex items-center space-x-3">
                         <MdBusiness className={`w-5 h-5 ${textColor}`} />
                         <div>
@@ -201,13 +191,6 @@ export default function WorkOrderDetailPage() {
                         <div>
                           <div className={`text-sm ${textColor} opacity-70`}>Location</div>
                           <div className={`${textColor}`}>{cleanCityName(workOrder.city, workOrder.state)}, {workOrder.state}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <MdDateRange className={`w-5 h-5 ${textColor}`} />
-                        <div>
-                          <div className={`text-sm ${textColor} opacity-70`}>Service Date</div>
-                          <div className={`${textColor}`}>{formatDate(workOrder.serviceDate)}</div>
                         </div>
                       </div>
                     </div>
@@ -252,11 +235,6 @@ export default function WorkOrderDetailPage() {
                     <div>
                       <h3 className="text-lg font-semibold text-emerald-900 mb-2">Project Title</h3>
                       <p className="text-emerald-800">{workOrder.title}</p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-lg font-semibold text-emerald-900 mb-2">Service Date</h3>
-                      <p className="text-emerald-800">{formatDate(workOrder.serviceDate)}</p>
                     </div>
                     
                     <div>
@@ -310,14 +288,6 @@ export default function WorkOrderDetailPage() {
                       <div className="text-slate-800 text-sm mt-1">State Served</div>
                     </div>
                   </div>
-                  
-                  <div className="mt-8 p-4 bg-slate-600/10 rounded-lg border border-slate-600/20">
-                    <h3 className="font-semibold text-slate-900 mb-2">Professional Expertise Applied:</h3>
-                    <p className="text-slate-800 leading-relaxed">
-                      As part of my comprehensive technology consulting services, this {workOrder.typeOfWork.toLowerCase()} project for {workOrder.company} demonstrates my commitment to delivering high-quality, AI-enhanced solutions. 
-                      Each project is executed with precision, leveraging cutting-edge technology and best practices to ensure optimal results for clients nationwide.
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -327,25 +297,38 @@ export default function WorkOrderDetailPage() {
                   <h2 className="text-2xl font-bold text-sky-900 mb-4">
                     Need Similar Service?
                   </h2>
-                  <p className="text-sky-800 mb-6 max-w-2xl mx-auto">
-                    Based on this {workOrder.typeOfWork} project in {workOrder.state}, I can provide similar AI-enhanced technology solutions for your business.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <div className="flex justify-center">
                     <Link 
                       href="/contact"
                       className="btn-primary bg-sky-600 hover:bg-sky-700 text-white"
                     >
                       Request Quote
                     </Link>
-                    <Link 
-                      href="/experience/full-work-log"
-                      className="btn-outline border-sky-600 text-sky-800 hover:bg-sky-600 hover:text-white"
-                    >
-                      View More Projects
-                    </Link>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Navigation */}
+      <section className="py-8 bg-transparent">
+        <div className="container-width">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/"
+                className="btn-outline border-sky-600 text-sky-800 hover:bg-sky-600 hover:text-white"
+              >
+                Back to Home
+              </Link>
+              <Link 
+                href="/experience/full-work-log"
+                className="btn-primary bg-sky-600 hover:bg-sky-700 text-white"
+              >
+                Back to Work Orders
+              </Link>
             </div>
           </div>
         </div>

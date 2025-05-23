@@ -26,22 +26,90 @@ interface WorkOrder {
   buyerRating: number;
 }
 
+interface GroupedWorkOrder {
+  title: string;
+  typeOfWork: string;
+  count: number;
+  workOrders: WorkOrder[];
+  earliestDate: string;
+  latestDate: string;
+  locations: string[];
+  companies: string[];
+  id: string; // Use first work order ID for routing
+}
+
 export default function FullWorkLogPage() {
   const [workOrders, setWorkOrders] = useState<WorkOrder[]>([]);
+  const [groupedOrders, setGroupedOrders] = useState<GroupedWorkOrder[]>([]);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [stateFilter, setStateFilter] = useState('');
   const [loading, setLoading] = useState(true);
-  const [displayCount, setDisplayCount] = useState(24); // Show 24 items initially
+  const [displayCount, setDisplayCount] = useState(50); // Show 50 items initially
   const [loadingMore, setLoadingMore] = useState(false);
 
   const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
+
+  const groupWorkOrdersByTitle = (orders: WorkOrder[]): GroupedWorkOrder[] => {
+    const grouped = orders.reduce((acc, order) => {
+      const title = order.title;
+      if (!acc[title]) {
+        acc[title] = [];
+      }
+      acc[title].push(order);
+      return acc;
+    }, {} as Record<string, WorkOrder[]>);
+
+    const groupedOrders = Object.entries(grouped).map(([title, orders]) => {
+      const sortedOrders = orders.sort((a, b) => new Date(a.serviceDate).getTime() - new Date(b.serviceDate).getTime());
+      const uniqueLocations = Array.from(new Set(orders.map(o => `${cleanCityName(o.city, o.state)}, ${o.state}`)));
+      const uniqueCompanies = Array.from(new Set(orders.map(o => o.company)));
+      
+      return {
+        title,
+        typeOfWork: orders[0].typeOfWork, // Use the most common or first type
+        count: orders.length,
+        workOrders: sortedOrders,
+        earliestDate: sortedOrders[0].serviceDate,
+        latestDate: sortedOrders[sortedOrders.length - 1].serviceDate,
+        locations: uniqueLocations,
+        companies: uniqueCompanies,
+        id: sortedOrders[0].id
+      };
+    });
+
+    // Sort: grouped work orders (count > 1) first by highest count, then individual orders (count = 1) by most recent date
+    return groupedOrders.sort((a, b) => {
+      // If both are grouped (count > 1), sort by count descending
+      if (a.count > 1 && b.count > 1) {
+        return b.count - a.count;
+      }
+      
+      // If both are individual (count = 1), sort by most recent date
+      if (a.count === 1 && b.count === 1) {
+        return new Date(b.latestDate).getTime() - new Date(a.latestDate).getTime();
+      }
+      
+      // Grouped orders (count > 1) always come before individual orders (count = 1)
+      if (a.count > 1 && b.count === 1) {
+        return -1;
+      }
+      
+      if (a.count === 1 && b.count > 1) {
+        return 1;
+      }
+      
+      // Fallback to date sorting
+      return new Date(b.latestDate).getTime() - new Date(a.latestDate).getTime();
+    });
+  };
 
   useEffect(() => {
     fetch('/data/processed-work-orders.json')
       .then(res => res.json())
       .then(data => {
         setWorkOrders(data);
+        setGroupedOrders(groupWorkOrdersByTitle(data));
         setLoading(false);
       })
       .catch(error => {
@@ -51,22 +119,23 @@ export default function FullWorkLogPage() {
   }, []);
 
   const filteredOrders = useMemo(() => {
-    return workOrders.filter(order => {
+    return groupedOrders.filter(group => {
       const matchesSearch = search === '' || 
-        order.title.toLowerCase().includes(search.toLowerCase()) ||
-        order.company.toLowerCase().includes(search.toLowerCase()) ||
-        order.city.toLowerCase().includes(search.toLowerCase());
+        group.title.toLowerCase().includes(search.toLowerCase()) ||
+        group.companies.some(company => company.toLowerCase().includes(search.toLowerCase())) ||
+        group.locations.some(location => location.toLowerCase().includes(search.toLowerCase()));
       
-      const matchesType = typeFilter === '' || order.typeOfWork === typeFilter;
-      const matchesState = stateFilter === '' || order.state === stateFilter;
+      const matchesType = typeFilter === '' || group.typeOfWork === typeFilter;
+      const matchesState = stateFilter === '' || 
+        group.workOrders.some(order => order.state === stateFilter);
       
       return matchesSearch && matchesType && matchesState;
     });
-  }, [workOrders, search, typeFilter, stateFilter]);
+  }, [groupedOrders, search, typeFilter, stateFilter]);
 
   // Reset display count when filters change
   useEffect(() => {
-    setDisplayCount(24);
+    setDisplayCount(50);
   }, [search, typeFilter, stateFilter]);
 
   const displayedOrders = useMemo(() => {
@@ -81,7 +150,7 @@ export default function FullWorkLogPage() {
     setLoadingMore(true);
     // Simulate loading delay for better UX
     setTimeout(() => {
-      setDisplayCount(prev => prev + 24);
+      setDisplayCount(prev => prev + 50);
       setLoadingMore(false);
     }, 500);
   };
@@ -93,14 +162,6 @@ export default function FullWorkLogPage() {
     const colors = ['deep-sky-blue', 'navy-blue', 'emerald-green', 'orange-peel'];
     const hash = type.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
     return colors[hash % colors.length];
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
   };
 
   const cleanCityName = (city: string, state: string) => {
@@ -239,10 +300,10 @@ export default function FullWorkLogPage() {
             </div>
             
             <div className="mt-4 text-emerald-800 text-sm">
-              Showing {displayedOrders.length} of {filteredOrders.length} projects
-              {filteredOrders.length !== workOrders.length && (
+              Showing {displayedOrders.length} project group{displayedOrders.length !== 1 ? 's' : ''} ({displayedOrders.reduce((total, group) => total + group.count, 0)} total projects) of {filteredOrders.length} group{filteredOrders.length !== 1 ? 's' : ''} ({filteredOrders.reduce((total, group) => total + group.count, 0)} total projects)
+              {filteredOrders.length !== groupedOrders.length && (
                 <span className="ml-2 opacity-75">
-                  (filtered from {workOrders.length} total)
+                  (filtered from {groupedOrders.length} total groups)
                 </span>
               )}
             </div>
@@ -254,8 +315,8 @@ export default function FullWorkLogPage() {
       <section className="pb-16 bg-transparent">
         <div className="container-width">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {displayedOrders.map((order, index) => {
-              const color = getWorkTypeColor(order.typeOfWork);
+            {displayedOrders.map((group, index) => {
+              const color = getWorkTypeColor(group.typeOfWork);
               const bgColor = color === 'deep-sky-blue' ? 'bg-sky-500/20' :
                              color === 'navy-blue' ? 'bg-blue-800/20' :
                              color === 'emerald-green' ? 'bg-emerald-500/20' :
@@ -271,8 +332,8 @@ export default function FullWorkLogPage() {
               
               return (
                 <Link 
-                  key={order.id} 
-                  href={`/experience/full-work-log/${order.id}`}
+                  key={group.id} 
+                  href={group.count === 1 ? `/experience/full-work-log/${group.id}` : `/experience/full-work-log/group/${encodeURIComponent(group.title)}`}
                   className="metro-tile-revealed opacity-100 transition-all duration-500 block"
                   style={{ 
                     transitionDelay: `${index * 50}ms`
@@ -284,16 +345,21 @@ export default function FullWorkLogPage() {
                       <div>
                         <div className="flex items-center justify-between mb-3">
                           <span className={`text-xs px-2 py-1 ${bgColor} rounded-full ${textColor} font-medium`}>
-                            {order.typeOfWork}
+                            {group.typeOfWork}
                           </span>
+                          {group.count > 1 && (
+                            <span className={`text-xs px-2 py-1 bg-white/30 rounded-full ${textColor} font-bold`}>
+                              {group.count} projects
+                            </span>
+                          )}
                         </div>
                         
                         <h3 className={`text-lg font-bold ${textColor} mb-2 line-clamp-2 leading-tight`}>
-                          {order.title}
+                          {group.title}
                         </h3>
                         
                         <p className={`${textColor} opacity-80 text-sm mb-3 font-medium`}>
-                          {order.company}
+                          {group.count === 1 ? group.companies[0] : `${group.companies.length} client${group.companies.length !== 1 ? 's' : ''}`}
                         </p>
                       </div>
 
@@ -302,14 +368,7 @@ export default function FullWorkLogPage() {
                         <div className="flex items-center space-x-2">
                           <MdLocationOn className={`w-4 h-4 ${textColor} opacity-70`} />
                           <span className={`text-sm ${textColor} opacity-80`}>
-                            {cleanCityName(order.city, order.state)}, {order.state}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <MdDateRange className={`w-4 h-4 ${textColor} opacity-70`} />
-                          <span className={`text-sm ${textColor} opacity-80`}>
-                            {formatDate(order.serviceDate)}
+                            {group.count === 1 ? group.locations[0] : `${group.locations.length} location${group.locations.length !== 1 ? 's' : ''}`}
                           </span>
                         </div>
                       </div>
@@ -346,16 +405,38 @@ export default function FullWorkLogPage() {
                   <>
                     <span>Load More Projects</span>
                     <span className="bg-white/20 px-2 py-1 rounded text-sm">
-                      +{Math.min(24, filteredOrders.length - displayCount)}
+                      +{Math.min(50, filteredOrders.length - displayCount)}
                     </span>
                   </>
                 )}
               </button>
               <p className="text-sky-700 text-sm mt-3">
-                Showing {displayedOrders.length} of {filteredOrders.length} projects
+                Showing {displayedOrders.length} of {filteredOrders.length} project groups
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Footer Navigation */}
+      <section className="py-8 bg-transparent">
+        <div className="container-width">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/"
+                className="btn-outline border-sky-600 text-sky-800 hover:bg-sky-600 hover:text-white"
+              >
+                Back to Home
+              </Link>
+              <Link 
+                href="/experience"
+                className="btn-primary bg-sky-600 hover:bg-sky-700 text-white"
+              >
+                Back to Experience
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
