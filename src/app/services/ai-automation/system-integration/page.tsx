@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useScrollAnimationClass } from '@/lib/hooks/useScrollAnimation';
+import ServiceBottomNavigation from '@/components/ServiceBottomNavigation';
 import { 
   MdIntegrationInstructions,
   MdApi,
@@ -452,6 +453,25 @@ export default function SystemIntegrationPage() {
           </div>
         </div>
       </section>
+
+      {/* Bottom Navigation */}
+      <ServiceBottomNavigation
+        currentPage="System Integration"
+        currentCategory="AI Automation"
+        parentPage={{
+          name: "AI Automation",
+          href: "/services/ai-automation"
+        }}
+        previousPage={{
+          name: "Data Analysis",
+          href: "/services/ai-automation/data-analysis"
+        }}
+        relatedServices={[
+          { name: "Chatbot Development", href: "/services/ai-automation/chatbot-development" },
+          { name: "Process Automation", href: "/services/ai-automation/process-automation" },
+          { name: "Data Analysis", href: "/services/ai-automation/data-analysis" }
+        ]}
+      />
     </div>
   );
 } 

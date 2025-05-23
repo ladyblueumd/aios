@@ -18,6 +18,22 @@ export default function HomePage() {
   const experienceTilesAnimation = useStaggeredAnimation<HTMLDivElement>(experienceSections.length, 120);
   const connectTilesAnimation = useStaggeredAnimation<HTMLDivElement>(3, 100);
 
+  // Function to determine the correct href for each service
+  const getServiceHref = (serviceId: string): string => {
+    switch (serviceId) {
+      case 'ai-automation':
+        return '/services/ai-automation';
+      case 'hardware-deployment':
+        return '/services/hardware-deployment';
+      case 'software-development':
+        return '/services/software-development';
+      case 'pos-field-services':
+        return '/services/pos-field-services';
+      default:
+        return '/contact';
+    }
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden relative z-10">
       
@@ -75,12 +91,86 @@ export default function HomePage() {
                   description={service.description}
                   icon={service.icon}
                   bgColor={service.color}
-                  href="/contact"
+                  href={getServiceHref(service.id)}
                   size="medium"
                   features={service.features.slice(0, 3)}
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AI Automation Spotlight Section - Direct Links to Subpages */}
+      <section className="section-padding bg-gradient-to-br from-sky-50/50 to-emerald-50/50 backdrop-blur-sm">
+        <div className="container-width">
+          <div className="text-center mb-12">
+            <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-sky-500/30">
+              <h2 className="text-3xl md:text-4xl font-bold text-sky-600 mb-4">
+                AI Automation Specialists
+              </h2>
+              <p className="text-xl text-sky-700 max-w-3xl mx-auto">
+                Jump directly to specialized AI solutions tailored for your specific business needs
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Tile
+              title="AI Chatbot Development"
+              description="Intelligent conversational AI that understands your business and customers."
+              icon="MdPsychology"
+              bgColor="deep-sky-blue"
+              href="/services/ai-automation/chatbot-development"
+              size="medium"
+              features={[
+                "Natural language processing",
+                "Multi-platform integration", 
+                "Custom knowledge base"
+              ]}
+            />
+            
+            <Tile
+              title="Process Automation"
+              description="Streamline workflows with AI-powered automation solutions."
+              icon="MdAutoAwesome"
+              bgColor="emerald-green"
+              href="/services/ai-automation/process-automation"
+              size="medium"
+              features={[
+                "Workflow optimization",
+                "Task automation",
+                "Decision tree logic"
+              ]}
+            />
+            
+            <Tile
+              title="Data Analysis"
+              description="Transform raw data into actionable business insights."
+              icon="MdAnalytics"
+              bgColor="orange-peel"
+              href="/services/ai-automation/data-analysis"
+              size="medium"
+              features={[
+                "Predictive analytics",
+                "Real-time reporting",
+                "Pattern recognition"
+              ]}
+            />
+            
+            <Tile
+              title="System Integration"
+              description="Connect AI solutions with your existing business systems."
+              icon="MdIntegrationInstructions"
+              bgColor="navy-blue"
+              href="/services/ai-automation/system-integration"
+              size="medium"
+              features={[
+                "API development",
+                "Database connectivity",
+                "Cloud integration"
+              ]}
+            />
           </div>
         </div>
       </section>

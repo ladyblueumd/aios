@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useScrollAnimationClass } from '@/lib/hooks/useScrollAnimation';
+import ServiceBottomNavigation from '@/components/ServiceBottomNavigation';
 import { 
   MdPsychology,
   MdChat,
@@ -357,6 +358,25 @@ export default function ChatbotDevelopmentPage() {
           </div>
         </div>
       </section>
+
+      {/* Bottom Navigation */}
+      <ServiceBottomNavigation
+        currentPage="Chatbot Development"
+        currentCategory="AI Automation"
+        parentPage={{
+          name: "AI Automation",
+          href: "/services/ai-automation"
+        }}
+        nextPage={{
+          name: "Process Automation",
+          href: "/services/ai-automation/process-automation"
+        }}
+        relatedServices={[
+          { name: "Process Automation", href: "/services/ai-automation/process-automation" },
+          { name: "Data Analysis", href: "/services/ai-automation/data-analysis" },
+          { name: "System Integration", href: "/services/ai-automation/system-integration" }
+        ]}
+      />
     </div>
   );
 } 

@@ -53,7 +53,9 @@ import {
   MdNetworkCheck,
   MdVerifiedUser,
   MdCloudSync,
-  MdMonitorHeart
+  MdMonitorHeart,
+  MdPsychology,
+  MdAutoAwesome
 } from 'react-icons/md';
 import { getColorClasses } from '@/lib/utils';
 import { TileProps } from '@/lib/types';
@@ -120,6 +122,8 @@ const iconMap: { [key: string]: IconType } = {
   'MdVerifiedUser': MdVerifiedUser,
   'MdCloudSync': MdCloudSync,
   'MdMonitorHeart': MdMonitorHeart,
+  'MdPsychology': MdPsychology,
+  'MdAutoAwesome': MdAutoAwesome,
 };
 
 const Tile = ({ 

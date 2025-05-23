@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Tile from '@/components/Tile';
 import { useScrollAnimationClass, useStaggeredAnimation } from '@/lib/hooks/useScrollAnimation';
+import ServiceBottomNavigation from '@/components/ServiceBottomNavigation';
 import { 
   MdSmartToy, 
   MdAutoAwesome, 
@@ -296,6 +297,22 @@ export default function AIAutomationPage() {
           </div>
         </div>
       </section>
+
+      {/* Bottom Navigation */}
+      <ServiceBottomNavigation
+        currentPage="AI Automation"
+        currentCategory="Services"
+        parentPage={{
+          name: "All Services",
+          href: "/services"
+        }}
+        relatedServices={[
+          { name: "Chatbot Development", href: "/services/ai-automation/chatbot-development" },
+          { name: "Process Automation", href: "/services/ai-automation/process-automation" },
+          { name: "Data Analysis", href: "/services/ai-automation/data-analysis" },
+          { name: "System Integration", href: "/services/ai-automation/system-integration" }
+        ]}
+      />
     </div>
   );
 } 
