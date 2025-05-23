@@ -8,11 +8,8 @@ import {
   MdLocationOn, 
   MdBusiness,
   MdDateRange,
-  MdStar,
   MdArrowBack,
   MdWork,
-  MdFlag,
-  MdThumbUp,
   MdAssessment,
   MdPlace
 } from 'react-icons/md';
@@ -24,7 +21,6 @@ interface WorkOrder {
   typeOfWork: string;
   city: string;
   state: string;
-  country: string;
   company: string;
   rating: number;
   buyerRating: number;
@@ -71,6 +67,26 @@ export default function WorkOrderDetailPage() {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const cleanCityName = (city: string, state: string) => {
+    // Remove any street addresses or numbers at the beginning
+    // Keep only the city name for privacy
+    const cleaned = city.replace(/^\d+\s+[^,]*,?\s*/, '').trim();
+    
+    // If the entire field was just an address (cleaned becomes empty), 
+    // return "Service Location" for privacy
+    if (!cleaned || cleaned.length < 2) {
+      return "Service Location";
+    }
+    
+    // If it looks like it still contains address parts (has numbers in the middle),
+    // try to extract just the city part or return generic location
+    if (/\d+/.test(cleaned) && !/(street|st|avenue|ave|road|rd|drive|dr|lane|ln|boulevard|blvd)$/i.test(cleaned)) {
+      return "Service Location";
+    }
+    
+    return cleaned;
   };
 
   if (loading) {
@@ -169,47 +185,29 @@ export default function WorkOrderDetailPage() {
                   {workOrder.title}
                 </h1>
                 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-1 gap-8">
                   <div>
-                    <h2 className={`text-xl font-semibold ${textColor} mb-4`}>Client Information</h2>
-                    <div className="space-y-3">
+                    <h2 className={`text-xl font-semibold ${textColor} mb-4`}>Project Information</h2>
+                    <div className="grid md:grid-cols-3 gap-6">
                       <div className="flex items-center space-x-3">
                         <MdBusiness className={`w-5 h-5 ${textColor}`} />
-                        <span className={`${textColor} font-medium`}>{workOrder.company}</span>
+                        <div>
+                          <div className={`text-sm ${textColor} opacity-70`}>Client</div>
+                          <div className={`${textColor} font-medium`}>{workOrder.company}</div>
+                        </div>
                       </div>
                       <div className="flex items-center space-x-3">
                         <MdLocationOn className={`w-5 h-5 ${textColor}`} />
-                        <span className={`${textColor}`}>{workOrder.city}, {workOrder.state}, {workOrder.country}</span>
+                        <div>
+                          <div className={`text-sm ${textColor} opacity-70`}>Location</div>
+                          <div className={`${textColor}`}>{cleanCityName(workOrder.city, workOrder.state)}, {workOrder.state}</div>
+                        </div>
                       </div>
                       <div className="flex items-center space-x-3">
                         <MdDateRange className={`w-5 h-5 ${textColor}`} />
-                        <span className={`${textColor}`}>{formatDate(workOrder.serviceDate)}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h2 className={`text-xl font-semibold ${textColor} mb-4`}>Performance Ratings</h2>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <MdStar className={`w-5 h-5 ${textColor}`} />
-                          <span className={`${textColor}`}>Service Rating</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span className={`text-2xl font-bold ${textColor}`}>{workOrder.rating}</span>
-                          <span className={`${textColor} opacity-70`}>/ 5.0</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <MdThumbUp className={`w-5 h-5 ${textColor}`} />
-                          <span className={`${textColor}`}>Client Rating</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span className={`text-2xl font-bold ${textColor}`}>{workOrder.buyerRating}</span>
-                          <span className={`${textColor} opacity-70`}>/ 5.0</span>
+                        <div>
+                          <div className={`text-sm ${textColor} opacity-70`}>Service Date</div>
+                          <div className={`${textColor}`}>{formatDate(workOrder.serviceDate)}</div>
                         </div>
                       </div>
                     </div>
@@ -283,26 +281,12 @@ export default function WorkOrderDetailPage() {
                     
                     <div>
                       <h3 className="text-lg font-semibold text-orange-900 mb-2">Service Location</h3>
-                      <p className="text-orange-800">{workOrder.city}, {workOrder.state}</p>
+                      <p className="text-orange-800">{cleanCityName(workOrder.city, workOrder.state)}, {workOrder.state}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-lg font-semibold text-orange-900 mb-2">Country</h3>
-                      <p className="text-orange-800">{workOrder.country}</p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-lg font-semibold text-orange-900 mb-2">Performance Score</h3>
-                      <div className="flex items-center space-x-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-orange-900">{workOrder.rating}</div>
-                          <div className="text-xs text-orange-800">Service</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-orange-900">{workOrder.buyerRating}</div>
-                          <div className="text-xs text-orange-800">Client</div>
-                        </div>
-                      </div>
+                      <h3 className="text-lg font-semibold text-orange-900 mb-2">Service Category</h3>
+                      <p className="text-orange-800">{workOrder.typeOfWork}</p>
                     </div>
                   </div>
                 </div>
@@ -316,7 +300,7 @@ export default function WorkOrderDetailPage() {
                     <span>Work Order Summary</span>
                   </h2>
                   
-                  <div className="grid md:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div className="text-center">
                       <div className="text-3xl font-bold text-slate-900">{workOrder.typeOfWork}</div>
                       <div className="text-slate-800 text-sm mt-1">Service Category</div>
@@ -324,12 +308,6 @@ export default function WorkOrderDetailPage() {
                     <div className="text-center">
                       <div className="text-3xl font-bold text-slate-900">{workOrder.state}</div>
                       <div className="text-slate-800 text-sm mt-1">State Served</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-slate-900">
-                        {workOrder.rating > 0 ? workOrder.rating : workOrder.buyerRating > 0 ? workOrder.buyerRating : 'N/A'}
-                      </div>
-                      <div className="text-slate-800 text-sm mt-1">Performance Rating</div>
                     </div>
                   </div>
                   

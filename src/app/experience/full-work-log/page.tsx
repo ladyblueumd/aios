@@ -7,7 +7,6 @@ import {
   MdLocationOn, 
   MdBusiness,
   MdDateRange,
-  MdStar,
   MdSearch,
   MdFilterList,
   MdClear,
@@ -22,7 +21,6 @@ interface WorkOrder {
   typeOfWork: string;
   city: string;
   state: string;
-  country: string;
   company: string;
   rating: number;
   buyerRating: number;
@@ -38,7 +36,6 @@ export default function FullWorkLogPage() {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const heroAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
-  const statsAnimation = useScrollAnimationClass('scroll-hidden', 'scroll-revealed');
 
   useEffect(() => {
     fetch('/data/processed-work-orders.json')
@@ -106,11 +103,24 @@ export default function FullWorkLogPage() {
     });
   };
 
-  const stats = {
-    total: workOrders.length,
-    avgRating: workOrders.length > 0 ? (workOrders.reduce((acc, order) => acc + order.rating, 0) / workOrders.length).toFixed(1) : '0',
-    avgBuyerRating: workOrders.length > 0 ? (workOrders.reduce((acc, order) => acc + order.buyerRating, 0) / workOrders.length).toFixed(1) : '0',
-    states: uniqueStates.length
+  const cleanCityName = (city: string, state: string) => {
+    // Remove any street addresses or numbers at the beginning
+    // Keep only the city name for privacy
+    const cleaned = city.replace(/^\d+\s+[^,]*,?\s*/, '').trim();
+    
+    // If the entire field was just an address (cleaned becomes empty), 
+    // return "Service Location" for privacy
+    if (!cleaned || cleaned.length < 2) {
+      return "Service Location";
+    }
+    
+    // If it looks like it still contains address parts (has numbers in the middle),
+    // try to extract just the city part or return generic location
+    if (/\d+/.test(cleaned) && !/(street|st|avenue|ave|road|rd|drive|dr|lane|ln|boulevard|blvd)$/i.test(cleaned)) {
+      return "Service Location";
+    }
+    
+    return cleaned;
   };
 
   if (loading) {
@@ -240,48 +250,6 @@ export default function FullWorkLogPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-transparent">
-        <div className="container-width">
-          <div className="scroll-revealed opacity-100 transition-all duration-600">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-sky-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-sky-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-sky-900 mb-2">
-                  {stats.total}
-                </div>
-                <div className="text-sky-800 text-sm md:text-base">
-                  Total Projects
-                </div>
-              </div>
-              <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-emerald-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-emerald-900 mb-2">
-                  {stats.avgRating}★
-                </div>
-                <div className="text-emerald-800 text-sm md:text-base">
-                  Avg Rating
-                </div>
-              </div>
-              <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-6 text-center border border-orange-500/30">
-                <div className="text-3xl md:text-4xl font-bold text-orange-900 mb-2">
-                  {stats.avgBuyerRating}★
-                </div>
-                <div className="text-orange-800 text-sm md:text-base">
-                  Client Rating
-                </div>
-              </div>
-              <div className="bg-blue-800/20 backdrop-blur-sm rounded-xl p-6 text-center border border-blue-800/30">
-                <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
-                  {stats.states}
-                </div>
-                <div className="text-blue-800 text-sm md:text-base">
-                  States Served
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Work Orders Grid */}
       <section className="pb-16 bg-transparent">
         <div className="container-width">
@@ -318,12 +286,6 @@ export default function FullWorkLogPage() {
                           <span className={`text-xs px-2 py-1 ${bgColor} rounded-full ${textColor} font-medium`}>
                             {order.typeOfWork}
                           </span>
-                          <div className="flex items-center space-x-1">
-                            <MdStar className={`w-4 h-4 ${textColor}`} />
-                            <span className={`text-sm ${textColor} font-medium`}>
-                              {order.rating}
-                            </span>
-                          </div>
                         </div>
                         
                         <h3 className={`text-lg font-bold ${textColor} mb-2 line-clamp-2 leading-tight`}>
@@ -340,7 +302,7 @@ export default function FullWorkLogPage() {
                         <div className="flex items-center space-x-2">
                           <MdLocationOn className={`w-4 h-4 ${textColor} opacity-70`} />
                           <span className={`text-sm ${textColor} opacity-80`}>
-                            {order.city}, {order.state}
+                            {cleanCityName(order.city, order.state)}, {order.state}
                           </span>
                         </div>
                         
