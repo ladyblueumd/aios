@@ -4,6 +4,26 @@
 - **Repository**: `https://github.com/ladyblueumd/aios.git`
 - **Recommended Branch**: `subpages-development` (Latest with navigation features)
 - **Production Ready**: ✅ All 18 pages build successfully
+- **Alternative**: See `VERCEL_DUAL_BRANCH_SETUP.md` for main + development branch deployment
+
+## 🎯 Branch Selection Guide
+
+### **Option A: Full Featured Deployment (Recommended)**
+- **Branch**: `subpages-development`
+- **Features**: Complete AI automation portal, navigation, work orders
+- **Pages**: 18 pages with full functionality
+- **Best for**: Immediate deployment with all features
+
+### **Option B: Conservative Deployment**  
+- **Branch**: `main`
+- **Features**: Basic AI/OS site with Metro tiles
+- **Pages**: ~6 basic pages
+- **Best for**: Stable baseline, then merge features later
+
+### **Option C: Dual Branch Setup**
+- **See**: `VERCEL_DUAL_BRANCH_SETUP.md` for complete guide
+- **Setup**: Production (main) + Staging (subpages-development)
+- **Best for**: Professional deployment with staging environment
 
 ## 📋 Pre-Deployment Checklist
 
