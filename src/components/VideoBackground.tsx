@@ -21,6 +21,7 @@ export default function VideoBackground({
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -29,135 +30,185 @@ export default function VideoBackground({
     // Track user interaction for browsers that require it
     const handleUserInteraction = () => {
       setUserInteracted(true);
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
-      document.removeEventListener('keydown', handleUserInteraction);
+      if (video.paused) {
+        playVideo();
+      }
     };
 
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
-    document.addEventListener('keydown', handleUserInteraction);
-
-    const handleCanPlay = () => {
-      setIsVideoLoaded(true);
-      // Try to play the video
-      attemptPlay();
-    };
-
-    const handleError = () => {
-      console.warn('Video failed to load, falling back to background image');
-      setHasError(true);
-      setIsVideoLoaded(false);
-      onLoadError?.();
-    };
-
-    const attemptPlay = async () => {
+    // Function to attempt video playback with autoplay policy handling
+    const playVideo = async () => {
       if (!video) return;
 
       try {
-        // First try to play muted
+        // Ensure video is muted for autoplay to work in all browsers
         video.muted = true;
+        video.playsInline = true;
+        
         const playPromise = video.play();
         
         if (playPromise !== undefined) {
           await playPromise;
+          setIsVideoLoaded(true);
+          setShowFallback(false);
           console.log('Video autoplay successful');
         }
       } catch (error: any) {
-        console.warn('Autoplay failed:', error.message);
+        console.warn('Video autoplay failed:', error.name, error.message);
         
-        // If autoplay fails, we'll wait for user interaction
         if (error.name === 'NotAllowedError') {
-          console.log('Autoplay blocked, waiting for user interaction');
+          // Autoplay was prevented - this is expected on many sites
+          console.log('Autoplay blocked by browser policy - showing fallback');
+          setShowFallback(true);
           
-          // Try again after user interaction
-          const retryPlay = () => {
-            if (userInteracted && video) {
-              video.play().catch((e) => {
-                console.warn('Video play failed even after user interaction:', e);
-              });
-            }
-          };
-
-          // Check periodically if user has interacted
-          const intervalId = setInterval(() => {
-            if (userInteracted) {
-              retryPlay();
-              clearInterval(intervalId);
-            }
-          }, 1000);
-
-          // Clean up after 10 seconds
-          setTimeout(() => clearInterval(intervalId), 10000);
+          // Add event listeners for user interaction
+          document.addEventListener('click', handleUserInteraction, { once: true });
+          document.addEventListener('touchstart', handleUserInteraction, { once: true });
+          document.addEventListener('keydown', handleUserInteraction, { once: true });
+        } else {
+          // Other errors (network, codec, etc.)
+          setHasError(true);
+          setShowFallback(true);
+          onLoadError?.();
         }
       }
     };
 
-    // Set up event listeners
+    // Handle video load events
+    const handleCanPlay = () => {
+      console.log('Video can play - attempting autoplay');
+      playVideo();
+    };
+
+    const handleLoadStart = () => {
+      console.log('Video load started');
+    };
+
+    const handleError = (e: Event) => {
+      console.error('Video load error:', e);
+      setHasError(true);
+      setShowFallback(true);
+      onLoadError?.();
+    };
+
+    const handleTimeUpdate = () => {
+      // Only track this once to confirm video is actually playing
+      if (!isVideoLoaded) {
+        setIsVideoLoaded(true);
+        setShowFallback(false);
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+      }
+    };
+
+    // Set up video event listeners
     video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('loadstart', handleLoadStart);
     video.addEventListener('error', handleError);
-    video.addEventListener('loadeddata', () => {
-      console.log('Video data loaded');
-    });
+    video.addEventListener('timeupdate', handleTimeUpdate);
 
     // Cleanup function
     return () => {
       video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('error', handleError);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      
       document.removeEventListener('click', handleUserInteraction);
       document.removeEventListener('touchstart', handleUserInteraction);
       document.removeEventListener('keydown', handleUserInteraction);
     };
-  }, [userInteracted, onLoadError]);
+  }, [sources, onLoadError, isVideoLoaded]);
 
-  // If video has error and we have a fallback image, show it
-  if (hasError && fallbackImage) {
-    return (
-      <div
-        className={`bg-cover bg-center bg-no-repeat ${className}`}
-        style={{
-          backgroundImage: `url(${fallbackImage})`,
-          ...style
-        }}
-      />
+  // Handle intersection observer for performance
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video is visible, ensure it's playing if possible
+            if (video.paused && !hasError && (userInteracted || video.muted)) {
+              video.play().catch(() => {
+                // Ignore errors here, fallback is already handled
+              });
+            }
+          } else {
+            // Video is not visible, pause to save resources
+            if (!video.paused) {
+              video.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.25 }
     );
-  }
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasError, userInteracted]);
 
   return (
-    <>
+    <div className={`relative ${className}`} style={style}>
+      {/* Video Element */}
       <video
         ref={videoRef}
-        autoPlay
+        className={`w-full h-full object-cover transition-opacity duration-1000 ${
+          showFallback ? 'opacity-0' : 'opacity-100'
+        }`}
         muted
         loop
         playsInline
         preload="metadata"
-        controls={false}
-        disablePictureInPicture
-        webkit-playsinline="true" // Legacy iOS support
-        className={className}
-        style={style}
-        onError={() => {
-          console.error('Video element error');
-          setHasError(true);
+        poster={fallbackImage}
+        style={{
+          objectPosition: 'center',
+          backgroundColor: '#000'
         }}
       >
         {sources.map((src, index) => (
           <source key={index} src={src} type="video/mp4" />
         ))}
+        {/* Fallback text for browsers without video support */}
         Your browser does not support the video tag.
       </video>
-      
-      {/* Fallback background image while video loads or if it fails */}
-      {(!isVideoLoaded || hasError) && fallbackImage && (
+
+      {/* Fallback Background Image */}
+      {(showFallback || hasError) && fallbackImage && (
         <div
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${className}`}
+          className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
           style={{
             backgroundImage: `url(${fallbackImage})`,
-            zIndex: -1
+            opacity: showFallback || hasError ? 1 : 0
           }}
         />
       )}
-    </>
+
+      {/* User Interaction Overlay (only shown if autoplay is blocked) */}
+      {showFallback && !hasError && !userInteracted && (
+        <div 
+          className="absolute inset-0 flex items-center justify-center bg-black/20 cursor-pointer"
+          onClick={() => {
+            setUserInteracted(true);
+            const video = videoRef.current;
+            if (video) {
+              video.play().then(() => {
+                setShowFallback(false);
+              }).catch(() => {
+                console.log('Manual play failed');
+              });
+            }
+          }}
+        >
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-white text-center">
+            <div className="text-lg mb-2">🎬</div>
+            <div className="text-sm">Click to play video</div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 } 
