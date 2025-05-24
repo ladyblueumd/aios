@@ -22,14 +22,18 @@ export default function VideoBackground({
   const [hasError, setHasError] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string>('Initializing...');
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    setDebugInfo('Video element ready, setting up...');
+
     // Track user interaction for browsers that require it
     const handleUserInteraction = () => {
       setUserInteracted(true);
+      setDebugInfo('User interaction detected, attempting play...');
       if (video.paused) {
         playVideo();
       }
@@ -40,6 +44,8 @@ export default function VideoBackground({
       if (!video) return;
 
       try {
+        setDebugInfo('Attempting to play video...');
+        
         // Ensure video is muted for autoplay to work in all browsers
         video.muted = true;
         video.playsInline = true;
@@ -50,6 +56,7 @@ export default function VideoBackground({
           await playPromise;
           setIsVideoLoaded(true);
           setShowFallback(false);
+          setDebugInfo('Video playing successfully!');
           console.log('Video autoplay successful');
         }
       } catch (error: any) {
@@ -57,7 +64,7 @@ export default function VideoBackground({
         
         if (error.name === 'NotAllowedError') {
           // Autoplay was prevented - this is expected on many sites
-          console.log('Autoplay blocked by browser policy - showing fallback');
+          setDebugInfo('Autoplay blocked - click to play video');
           setShowFallback(true);
           
           // Add event listeners for user interaction
@@ -66,6 +73,7 @@ export default function VideoBackground({
           document.addEventListener('keydown', handleUserInteraction, { once: true });
         } else {
           // Other errors (network, codec, etc.)
+          setDebugInfo(`Video error: ${error.message}`);
           setHasError(true);
           setShowFallback(true);
           onLoadError?.();
@@ -75,16 +83,17 @@ export default function VideoBackground({
 
     // Handle video load events
     const handleCanPlay = () => {
-      console.log('Video can play - attempting autoplay');
+      setDebugInfo('Video can play - attempting autoplay');
       playVideo();
     };
 
     const handleLoadStart = () => {
-      console.log('Video load started');
+      setDebugInfo('Video loading started...');
     };
 
     const handleError = (e: Event) => {
       console.error('Video load error:', e);
+      setDebugInfo('Video load error - using fallback');
       setHasError(true);
       setShowFallback(true);
       onLoadError?.();
@@ -95,6 +104,7 @@ export default function VideoBackground({
       if (!isVideoLoaded) {
         setIsVideoLoaded(true);
         setShowFallback(false);
+        setDebugInfo('Video playing and updating time');
         video.removeEventListener('timeupdate', handleTimeUpdate);
       }
     };
@@ -182,31 +192,48 @@ export default function VideoBackground({
           className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
           style={{
             backgroundImage: `url(${fallbackImage})`,
-            opacity: showFallback || hasError ? 1 : 0
+            opacity: (showFallback || hasError) && !isVideoLoaded ? 1 : 0
           }}
         />
       )}
 
-      {/* User Interaction Overlay (only shown if autoplay is blocked) */}
+      {/* User Interaction Overlay (more prominent design) */}
       {showFallback && !hasError && !userInteracted && (
         <div 
-          className="absolute inset-0 flex items-center justify-center bg-black/20 cursor-pointer"
+          className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer backdrop-blur-sm"
           onClick={() => {
             setUserInteracted(true);
             const video = videoRef.current;
             if (video) {
               video.play().then(() => {
                 setShowFallback(false);
-              }).catch(() => {
-                console.log('Manual play failed');
+                setDebugInfo('Video started after user interaction');
+              }).catch((error) => {
+                setDebugInfo(`Manual play failed: ${error.message}`);
+                console.log('Manual play failed:', error);
               });
             }
           }}
         >
-          <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-white text-center">
-            <div className="text-lg mb-2">🎬</div>
-            <div className="text-sm">Click to play video</div>
+          <div className="bg-white/20 backdrop-blur-md border border-white/30 p-6 text-white text-center shadow-2xl max-w-sm mx-4">
+            <div className="text-4xl mb-4 animate-pulse">🎬</div>
+            <div className="text-lg font-semibold mb-2">Video Background</div>
+            <div className="text-sm mb-4 opacity-90">Click anywhere to play the background video</div>
+            <div className="text-xs opacity-70">{debugInfo}</div>
           </div>
+        </div>
+      )}
+
+      {/* Debug info in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute top-4 left-4 bg-black/50 text-white text-xs p-2 font-mono">
+          Status: {debugInfo}
+          <br />
+          Video: {isVideoLoaded ? 'Playing' : 'Not Playing'}
+          <br />
+          Fallback: {showFallback ? 'Showing' : 'Hidden'}
+          <br />
+          Error: {hasError ? 'Yes' : 'No'}
         </div>
       )}
     </div>

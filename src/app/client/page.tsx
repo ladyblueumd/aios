@@ -26,30 +26,32 @@ export default function ClientLoginPage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative">
       
-      {/* Background Video with Fallback - Fixed positioning */}
-      <VideoBackground
-        sources={[
-          '/videos/7020018_Particle_Dot_1080p_optimized.mp4'
-        ]}
-        fallbackImage="/images/desktop_vision_1.png"
-        className="fixed inset-0 w-full h-full z-0"
-        style={{ filter: 'brightness(0.3) contrast(1.2)' }}
-        onLoadError={() => {
-          console.log('Video failed to load, using fallback image');
-        }}
-      />
+      {/* Background Video - Fixed behind everything */}
+      <div className="fixed inset-0 w-full h-full z-0">
+        <VideoBackground
+          sources={[
+            '/videos/7020018_Particle_Dot_1080p_optimized.mp4'
+          ]}
+          fallbackImage="/images/desktop_vision_1.png"
+          className="w-full h-full"
+          style={{ filter: 'brightness(0.3) contrast(1.2)' }}
+          onLoadError={() => {
+            console.log('Video failed to load, using fallback image');
+          }}
+        />
+      </div>
 
-      {/* Content Overlay - Proper z-index */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+      {/* Content Layer - Properly positioned above background */}
+      <div className="relative z-10 min-h-screen w-full flex items-center justify-center p-4">
         {/* Login Container */}
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 w-full max-w-md shadow-2xl">
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-8 w-full max-w-md shadow-2xl">
           
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
-              <div className="p-3 bg-white/20 backdrop-blur-sm">
+              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-lg">
                 <MdSmartToy className="w-12 h-12 text-white" />
               </div>
             </div>
@@ -73,7 +75,7 @@ export default function ClientLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
                   placeholder="Enter your email"
                   required
                 />
@@ -93,7 +95,7 @@ export default function ClientLoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
                   placeholder="Enter your password"
                   required
                 />
@@ -118,7 +120,7 @@ export default function ClientLoginPage() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 bg-white/10 border-white/20 text-sky-600 focus:ring-white/50"
+                  className="h-4 w-4 bg-white/10 border-white/20 text-sky-600 focus:ring-white/50 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-white/80">
                   Remember me
@@ -134,7 +136,7 @@ export default function ClientLoginPage() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 transform hover:scale-105 shadow-lg"
+              className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 transform hover:scale-105 shadow-lg"
             >
               Access AI/OS Dashboard
             </button>

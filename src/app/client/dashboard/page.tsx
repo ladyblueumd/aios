@@ -10,22 +10,24 @@ export default function ClientDashboardPage() {
   const [popoutActive, setPopoutActive] = useState(false);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative">
       
-      {/* Background Video with Fallback - Fixed positioning */}
-      <VideoBackground
-        sources={[
-          '/videos/7020018_Particle_Dot_1080p_optimized.mp4'
-        ]}
-        fallbackImage="/images/desktop_vision_1.png"
-        className="fixed inset-0 w-full h-full z-0"
-        style={{ filter: 'brightness(0.2) contrast(1.1)' }}
-        onLoadError={() => {
-          console.log('Dashboard video failed to load, using fallback image');
-        }}
-      />
+      {/* Background Video - Fixed behind everything */}
+      <div className="fixed inset-0 w-full h-full z-0">
+        <VideoBackground
+          sources={[
+            '/videos/7020018_Particle_Dot_1080p_optimized.mp4'
+          ]}
+          fallbackImage="/images/desktop_vision_1.png"
+          className="w-full h-full"
+          style={{ filter: 'brightness(0.2) contrast(1.1)' }}
+          onLoadError={() => {
+            console.log('Dashboard video failed to load, using fallback image');
+          }}
+        />
+      </div>
 
-      {/* App Layout - Proper z-index */}
+      {/* App Layout - Properly positioned above background */}
       <div className="relative z-10 min-h-screen">
         {/* Sidebar */}
         <div className="relative z-50">
