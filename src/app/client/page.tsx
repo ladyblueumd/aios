@@ -31,8 +31,8 @@ export default function ClientLoginPage() {
       {/* Background Video with Fallback */}
       <VideoBackground
         sources={[
-          '/videos/7020018_Particle_Dot_3840x2160.mp4',
-          '/videos/6994947_Cyber_Ai_3840x2160.mp4'
+          '/videos/7020018_Particle_Dot_1080p_optimized.mp4',
+          '/videos/6994947_Cyber_Ai_1080p_optimized.mp4'
         ]}
         fallbackImage="/images/desktop_vision_1.png"
         className="absolute inset-0 w-full h-full object-cover z-0"
