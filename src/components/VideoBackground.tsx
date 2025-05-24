@@ -23,12 +23,59 @@ export default function VideoBackground({
   const [userInteracted, setUserInteracted] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   const [debugInfo, setDebugInfo] = useState<string>('Initializing...');
+  const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
+
+  // Add multiple video source options for better fallback
+  const videoSources = [
+    '/videos/7020018_Particle_Dot_1080p_optimized.mp4',
+    // Fallback to original if optimized fails
+    '/videos/7020018_Particle_Dot_3840x2160.mp4',
+    // Alternative video if primary fails
+    '/videos/6994947_Cyber_Ai_1080p_optimized.mp4'
+  ];
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    setDebugInfo('Video element ready, setting up...');
+    setDebugInfo(`Attempting to load video source ${currentSourceIndex + 1}...`);
+
+    // Check if we're in production and test video accessibility
+    const testVideoSource = async () => {
+      try {
+        const response = await fetch(videoSources[currentSourceIndex], { 
+          method: 'HEAD',
+          cache: 'no-cache'
+        });
+        
+        if (!response.ok || response.headers.get('content-length') === '132') {
+          throw new Error(`Video source ${currentSourceIndex + 1} failed or corrupted`);
+        }
+        
+        setDebugInfo(`Video source ${currentSourceIndex + 1} accessible, proceeding...`);
+      } catch (error) {
+        console.warn(`Video source ${currentSourceIndex + 1} failed:`, error);
+        setDebugInfo(`Source ${currentSourceIndex + 1} failed, trying next...`);
+        
+        // Try next source
+        if (currentSourceIndex < videoSources.length - 1) {
+          setCurrentSourceIndex(currentSourceIndex + 1);
+          return;
+        } else {
+          // All sources failed, use fallback
+          setDebugInfo('All video sources failed, using fallback image');
+          setHasError(true);
+          setShowFallback(true);
+          onLoadError?.();
+          return;
+        }
+      }
+    };
+
+    // Test video accessibility in production
+    if (process.env.NODE_ENV === 'production') {
+      testVideoSource();
+    }
 
     // Track user interaction for browsers that require it
     const handleUserInteraction = () => {
@@ -93,10 +140,16 @@ export default function VideoBackground({
 
     const handleError = (e: Event) => {
       console.error('Video load error:', e);
-      setDebugInfo('Video load error - using fallback');
-      setHasError(true);
-      setShowFallback(true);
-      onLoadError?.();
+      setDebugInfo(`Video load error - trying next source or fallback`);
+      
+      // Try next video source if available
+      if (currentSourceIndex < videoSources.length - 1) {
+        setCurrentSourceIndex(currentSourceIndex + 1);
+      } else {
+        setHasError(true);
+        setShowFallback(true);
+        onLoadError?.();
+      }
     };
 
     const handleTimeUpdate = () => {
@@ -126,7 +179,7 @@ export default function VideoBackground({
       document.removeEventListener('touchstart', handleUserInteraction);
       document.removeEventListener('keydown', handleUserInteraction);
     };
-  }, [sources, onLoadError, isVideoLoaded]);
+  }, [sources, onLoadError, isVideoLoaded, currentSourceIndex]);
 
   // Handle intersection observer for performance
   useEffect(() => {
@@ -163,7 +216,7 @@ export default function VideoBackground({
 
   return (
     <div className={`relative ${className}`} style={style}>
-      {/* Video Element */}
+      {/* Video Element with multiple sources */}
       <video
         ref={videoRef}
         className={`w-full h-full object-cover transition-opacity duration-1000 ${
@@ -179,20 +232,23 @@ export default function VideoBackground({
           backgroundColor: '#000'
         }}
       >
-        {sources.map((src, index) => (
-          <source key={index} src={src} type="video/mp4" />
-        ))}
+        {/* Use current video source */}
+        <source 
+          src={videoSources[currentSourceIndex]} 
+          type="video/mp4" 
+        />
+        
         {/* Fallback text for browsers without video support */}
         Your browser does not support the video tag.
       </video>
 
-      {/* Fallback Background Image */}
+      {/* Fallback Background Image - Always show if video fails */}
       {(showFallback || hasError) && fallbackImage && (
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
           style={{
             backgroundImage: `url(${fallbackImage})`,
-            opacity: (showFallback || hasError) && !isVideoLoaded ? 1 : 0
+            opacity: 1
           }}
         />
       )}
@@ -224,16 +280,21 @@ export default function VideoBackground({
         </div>
       )}
 
-      {/* Debug info in development */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="absolute top-4 left-4 bg-black/50 text-white text-xs p-2 font-mono">
+      {/* Debug info in development and production */}
+      {(process.env.NODE_ENV === 'development' || showFallback || hasError) && (
+        <div className="absolute top-4 left-4 bg-black/70 text-white text-xs p-3 font-mono max-w-xs">
+          <div className="font-bold mb-1">Video Status</div>
           Status: {debugInfo}
+          <br />
+          Source: {currentSourceIndex + 1}/{videoSources.length}
           <br />
           Video: {isVideoLoaded ? 'Playing' : 'Not Playing'}
           <br />
           Fallback: {showFallback ? 'Showing' : 'Hidden'}
           <br />
           Error: {hasError ? 'Yes' : 'No'}
+          <br />
+          Environment: {process.env.NODE_ENV}
         </div>
       )}
     </div>
