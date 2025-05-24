@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import VideoBackground from '@/components/VideoBackground';
 import ClientSidebar from '@/components/client/ClientSidebar';
 import DashboardContent from '@/components/client/DashboardContent';
 
@@ -11,22 +12,19 @@ export default function ClientDashboardPage() {
   return (
     <div className="min-h-screen overflow-hidden relative">
       
-      {/* Background Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        controls={false}
-        disablePictureInPicture
+      {/* Background Video with Fallback */}
+      <VideoBackground
+        sources={[
+          '/videos/7020018_Particle_Dot_3840x2160.mp4',
+          '/videos/6994947_Cyber_Ai_3840x2160.mp4'
+        ]}
+        fallbackImage="/images/desktop_vision_1.png"
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ filter: 'brightness(0.2) contrast(1.1)' }}
-      >
-        <source src="/videos/7020018_Particle_Dot_3840x2160.mp4" type="video/mp4" />
-        <source src="/videos/6994947_Cyber_Ai_3840x2160.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+        onLoadError={() => {
+          console.log('Dashboard video failed to load, using fallback image');
+        }}
+      />
 
       {/* Sidebar */}
       <div className="relative z-50">
