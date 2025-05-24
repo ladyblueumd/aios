@@ -32,6 +32,7 @@ const Footer = () => {
       { name: 'Tech Insights Blog', href: '/blog' },
       { name: 'Helpdesk Support', href: '/client/helpdesk' },
       { name: 'Contact Us', href: '/contact' },
+      { name: 'Sitemap', href: '/sitemap' },
       { name: 'Privacy Policy', href: '/privacy' },
     ],
   };

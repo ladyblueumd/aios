@@ -13,7 +13,8 @@ import {
   MdBusiness,
   MdWork,
   MdArticle,
-  MdSupport
+  MdSupport,
+  MdMap
 } from 'react-icons/md';
 
 const Header = () => {
@@ -27,6 +28,7 @@ const Header = () => {
     { name: 'About', href: '/about', icon: MdInfo },
     { name: 'Blog', href: '/blog', icon: MdArticle },
     { name: 'Contact', href: '/contact', icon: MdEmail },
+    { name: 'Sitemap', href: '/sitemap', icon: MdMap },
   ];
 
   const toggleMobileMenu = () => {
