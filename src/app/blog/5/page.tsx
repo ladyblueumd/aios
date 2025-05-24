@@ -28,7 +28,7 @@ export default function BlogPost5() {
             </div>
             
             <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-              The Converging AI Landscape: Key Themes from Google I/O, Microsoft Build, and Anthropic's Latest
+              The Converging AI Landscape: Key Themes from Google I/O, Microsoft Build, and Anthropic&apos;s Latest
             </h1>
             
             <p className="text-xl text-white/90 leading-relaxed">
@@ -44,7 +44,7 @@ export default function BlogPost5() {
           <div className="max-w-4xl mx-auto prose prose-lg">
             
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              The past few weeks have delivered an unprecedented wave of AI announcements from the industry's biggest players. While each company has its own vision and approach, clear patterns are emerging that will define the next phase of AI adoption in business and technology.
+              The past few weeks have delivered an unprecedented wave of AI announcements from the industry&apos;s biggest players. While each company has its own vision and approach, clear patterns are emerging that will define the next phase of AI adoption in business and technology.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Trend 1: The Ascent of AI Agents</h2>

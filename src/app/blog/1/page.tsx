@@ -132,7 +132,7 @@ export default function BlogPost1() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">On-Device AI with Gemma 3n</h2>
 
             <p className="text-gray-700 mb-4">
-              Gemma 3n represents Google's commitment to edge computing and on-device AI processing. For IT professionals, this opens up new possibilities for privacy-conscious applications and offline functionality.
+              Gemma 3n represents Google&apos;s commitment to edge computing and on-device AI processing. For IT professionals, this opens up new possibilities for privacy-conscious applications and offline functionality.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">IT Applications for Edge AI</h3>
@@ -152,7 +152,7 @@ export default function BlogPost1() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Getting Started: Practical Next Steps</h2>
 
             <p className="text-gray-700 mb-4">
-              The announcements from Google I/O aren't just future promises—many are available today for testing and integration:
+              The announcements from Google I/O aren&apos;t just future promises—many are available today for testing and integration:
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Immediate Actions for IT Teams</h3>

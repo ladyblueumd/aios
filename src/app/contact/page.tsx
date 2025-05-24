@@ -236,7 +236,7 @@ export default function ContactPage() {
               <div className="p-4 bg-gray-50 text-center">
                 <p className="text-sm text-gray-600">
                   <Icon name="MdInfo" className="w-4 h-4 inline mr-1" />
-                  Can't find a suitable time? <a href="mailto:info@sadiethetechladyservices.net" className="text-sadie-primary hover:text-sadie-secondary">Email me</a> to arrange a custom appointment.
+                  Can&apos;t find a suitable time? <a href="mailto:info@sadiethetechladyservices.net" className="text-sadie-primary hover:text-sadie-secondary">Email me</a> to arrange a custom appointment.
                 </p>
               </div>
             </div>

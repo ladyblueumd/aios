@@ -87,7 +87,7 @@ export default function BlogPost6() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">The Evolving Skillset for IT Professionals</h2>
 
             <p className="text-gray-700 mb-4">
-              The core IT skills—troubleshooting, system administration, network management—remain valuable, but they're being supplemented by new competencies:
+              The core IT skills—troubleshooting, system administration, network management—remain valuable, but they&apos;re being supplemented by new competencies:
             </p>
 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-6 my-6">
