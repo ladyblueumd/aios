@@ -10,13 +10,11 @@ export default function HomePage() {
   const heroAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   const servicesAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   const experienceAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
-  const connectAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   const ctaAnimation = useScrollAnimationClass<HTMLDivElement>('scroll-hidden', 'scroll-revealed');
   
   // Staggered animations for tiles
   const servicesTilesAnimation = useStaggeredAnimation<HTMLDivElement>(serviceCategories.length, 150);
   const experienceTilesAnimation = useStaggeredAnimation<HTMLDivElement>(experienceSections.length, 120);
-  const connectTilesAnimation = useStaggeredAnimation<HTMLDivElement>(3, 100);
 
   // Function to determine the correct href for each service
   const getServiceHref = (serviceId: string): string => {
@@ -175,25 +173,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Experience Section - Mixed Grid Layout */}
+      {/* Experience Section - Portfolio Tile */}
       <section className="section-padding bg-transparent">
         <div className="container-width">
-          <div ref={experienceAnimation.elementRef} className={`text-center mb-12 ${experienceAnimation.animationClass} transition-all duration-600`}>
-            <div className="bg-emerald-500/20 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto border border-emerald-500/30">
-              <h2 className="text-3xl md:text-4xl font-bold text-emerald-600 mb-4">
-                AI/OS Track Record
-              </h2>
-              <p className="text-xl text-emerald-700 max-w-3xl mx-auto">
-                Proven AI automation and technology deployment experience across industries
-              </p>
-            </div>
-          </div>
-          
           <div ref={experienceTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {experienceSections.map((section, index) => {
-              // Make the "Full Work History" tile larger and centered
+              // Make the "Full Work History" tile full width
               const isFullHistory = section.id === 'full-history';
-              const gridClass = isFullHistory ? 'lg:col-span-2 lg:col-start-2' : '';
+              const gridClass = isFullHistory ? 'col-span-1 md:col-span-2 lg:col-span-3' : '';
               const tileSize = isFullHistory ? 'large' : 'medium';
               
               return (
@@ -216,95 +203,12 @@ export default function HomePage() {
                     href={isFullHistory ? "/experience" : "/contact"}
                     size={tileSize}
                     stats={section.stats}
+                    centerText={isFullHistory}
+                    hideIcon={isFullHistory}
                   />
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Connect with Sadie Section - 3 Tiles Grid Layout */}
-      <section className="section-padding bg-transparent">
-        <div className="container-width">
-          <div ref={connectAnimation.elementRef} className={`text-center mb-12 ${connectAnimation.animationClass} transition-all duration-600`}>
-            <div className="bg-indigo-500/20 backdrop-blur-sm p-8 max-w-4xl mx-auto border border-indigo-500/30">
-              <h2 className="text-3xl md:text-4xl font-bold text-indigo-600 mb-4">
-                Connect with AI/OS
-              </h2>
-              <p className="text-xl text-indigo-700 max-w-3xl mx-auto">
-                Get to know the AI automation expert behind the technology solutions
-              </p>
-            </div>
-          </div>
-          
-          <div ref={connectTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            
-            {/* About Sadie */}
-            <div 
-              className={`transition-all duration-500 ${
-                connectTilesAnimation.animatedItems[0] 
-                  ? 'metro-tile-revealed' 
-                  : 'metro-tile-hidden'
-              }`}
-              style={{ 
-                transitionDelay: connectTilesAnimation.isInView ? '100ms' : '0ms' 
-              }}
-            >
-              <Tile
-                title="About Sadie"
-                subtitle="The Tech Professional"
-                description="Learn about my journey, expertise, and passion for solving complex technology challenges."
-                icon="MdBusiness"
-                bgColor="navy-blue"
-                href="/about"
-                size="medium"
-              />
-            </div>
-            
-            {/* Get Support */}
-            <div 
-              className={`transition-all duration-500 ${
-                connectTilesAnimation.animatedItems[1] 
-                  ? 'metro-tile-revealed' 
-                  : 'metro-tile-hidden'
-              }`}
-              style={{ 
-                transitionDelay: connectTilesAnimation.isInView ? '200ms' : '0ms' 
-              }}
-            >
-              <Tile
-                title="Get Support"
-                subtitle="Ready to Help"
-                description="Contact me for technical support, project consultations, or to discuss your technology needs."
-                icon="MdBusiness"
-                bgColor="deep-sky-blue"
-                href="/contact"
-                size="medium"
-              />
-            </div>
-            
-            {/* Tech Insights Blog */}
-            <div 
-              className={`transition-all duration-500 ${
-                connectTilesAnimation.animatedItems[2] 
-                  ? 'metro-tile-revealed' 
-                  : 'metro-tile-hidden'
-              }`}
-              style={{ 
-                transitionDelay: connectTilesAnimation.isInView ? '300ms' : '0ms' 
-              }}
-            >
-              <Tile
-                title="Tech Insights Blog"
-                subtitle="Industry Knowledge"
-                description="Read my latest thoughts on technology trends, best practices, and innovative solutions."
-                icon="MdBusiness"
-                bgColor="emerald-green"
-                href="/contact"
-                size="medium"
-              />
-            </div>
           </div>
         </div>
       </section>

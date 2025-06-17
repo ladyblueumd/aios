@@ -67,6 +67,8 @@ interface ExtendedTileProps extends TileProps {
   features?: string[];
   onClick?: () => void;
   external?: boolean;
+  centerText?: boolean;
+  hideIcon?: boolean;
 }
 
 // Icon mapping for string to component conversion
@@ -139,7 +141,9 @@ const Tile = ({
   stats,
   features,
   onClick,
-  external = false
+  external = false,
+  centerText = false,
+  hideIcon = false
 }: ExtendedTileProps) => {
   
   // Get the actual icon component from the string name
@@ -189,22 +193,26 @@ const Tile = ({
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-4 right-4">
-          <IconComponent className="w-16 h-16 md:w-20 md:h-20 text-white/20" />
+          {hideIcon ? null : (
+            <IconComponent className="w-16 h-16 md:w-20 md:h-20 text-white/20" />
+          )}
         </div>
       </div>
       
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col h-full">
+      <div className={`relative z-10 flex flex-col h-full ${centerText ? 'text-center items-center' : ''}`}>
         
         {/* Header Section */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center space-x-3">
+        <div className={`flex items-start justify-between mb-2 ${centerText ? 'flex-col items-center text-center' : ''}`}>
+          <div className={`flex items-center space-x-3 ${centerText ? 'flex-col space-x-0 space-y-2' : ''}`}>
             <div className="p-2 bg-white/20 backdrop-blur-sm">
-              <IconComponent className={`${iconSizes[size]} text-white`} />
+              {hideIcon ? null : (
+                <IconComponent className={`${iconSizes[size]} text-white`} />
+              )}
             </div>
             
             {/* Title and Subtitle */}
-            <div className="flex-1">
+            <div className={`flex-1 ${centerText ? 'text-center' : ''}`}>
               <h3 className={`${textSizes[size].title} metro-title font-semibold leading-tight`}>
                 {title}
               </h3>
@@ -224,16 +232,16 @@ const Tile = ({
 
         {/* Description */}
         {description && (
-          <p className="text-white/90 text-sm mb-4 line-clamp-3 leading-relaxed">
+          <p className={`text-white/90 mb-3 line-clamp-3 leading-relaxed ${centerText ? 'text-center text-lg md:text-xl' : 'text-sm'}`}>
             {description}
           </p>
         )}
 
         {/* Features List */}
         {features && features.length > 0 && (
-          <ul className="text-white/80 text-xs space-y-1 mb-4">
+          <ul className={`text-white/80 text-xs space-y-1 mb-3 ${centerText ? 'text-center' : ''}`}>
             {features.slice(0, 3).map((feature, index) => (
-              <li key={index} className="flex items-center space-x-2">
+              <li key={index} className={`flex items-center space-x-2 ${centerText ? 'justify-center' : ''}`}>
                 <MdCheck className="w-3 h-3 text-white/70" />
                 <span>{feature}</span>
               </li>
@@ -247,13 +255,13 @@ const Tile = ({
         {/* Stats */}
         {stats && stats.length > 0 && (
           <div className="mt-auto">
-            <div className="grid grid-cols-2 gap-3">
+            <div className={`grid gap-2 ${centerText ? 'grid-cols-3' : 'grid-cols-2'}`}>
               {stats.slice(0, 4).map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-white font-bold text-lg md:text-xl">
+                  <div className="text-white font-bold text-2xl md:text-3xl">
                     {stat.value}
                   </div>
-                  <div className="text-white/70 text-xs">
+                  <div className="text-white/70 text-base">
                     {stat.label}
                   </div>
                 </div>

@@ -100,42 +100,6 @@ export const serviceCategories: ServiceCategory[] = [
 // Experience sections for the homepage
 export const experienceSections: ExperienceSection[] = [
   {
-    id: "pos-showcase",
-    title: "AI-Enhanced POS Solutions",
-    description: "Revolutionary AI-powered POS implementations for major retail and restaurant chains nationwide.",
-    icon: "MdReceipt",
-    color: "orange-peel",
-    stats: [
-      { label: "AI POS Installations", value: "300+" },
-      { label: "Restaurant Chains", value: "25+" },
-      { label: "Retail Locations", value: "150+" }
-    ]
-  },
-  {
-    id: "financial-projects", 
-    title: "AI Financial Technology Projects",
-    description: "Trusted by financial institutions for AI-driven infrastructure and intelligent security implementations.",
-    icon: "MdAccountBalance",
-    color: "navy-blue",
-    stats: [
-      { label: "Banks Served", value: "12+" },
-      { label: "AI Systems Deployed", value: "50+" },
-      { label: "Smart Security Systems", value: "75+" }
-    ]
-  },
-  {
-    id: "tech-stack",
-    title: "AI/OS Technology Stack", 
-    description: "Comprehensive AI expertise across machine learning, automation, and emerging intelligent technologies.",
-    icon: "MdBuild",
-    color: "emerald-green",
-    stats: [
-      { label: "AI Technologies", value: "100+" },
-      { label: "AI Certifications", value: "15+" },
-      { label: "Years AI Experience", value: "5+" }
-    ]
-  },
-  {
     id: "full-history",
     title: "Complete AI/OS Portfolio",
     description: "Interactive showcase of 994 AI-enhanced projects and automation deployments across multiple states and industries.",
