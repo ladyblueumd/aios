@@ -191,9 +191,9 @@ export default function HomePage() {
           
           <div ref={experienceTilesAnimation.elementRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {experienceSections.map((section, index) => {
-              // Make the "Full Work History" tile larger
+              // Make the "Full Work History" tile larger and centered
               const isFullHistory = section.id === 'full-history';
-              const gridClass = isFullHistory ? 'lg:col-span-2' : '';
+              const gridClass = isFullHistory ? 'lg:col-span-2 lg:col-start-2' : '';
               const tileSize = isFullHistory ? 'large' : 'medium';
               
               return (
@@ -213,7 +213,7 @@ export default function HomePage() {
                     description={section.description}
                     icon={section.icon}
                     bgColor={section.color}
-                    href="/contact"
+                    href={isFullHistory ? "/experience" : "/contact"}
                     size={tileSize}
                     stats={section.stats}
                   />
